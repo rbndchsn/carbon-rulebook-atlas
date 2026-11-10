@@ -10,9 +10,10 @@ Open `index.html`, or visit the GitHub Pages site once enabled.
 - **2026 in 33 events**, filterable by area.
 - **Seven-gate carbon-credit walkthrough** with CORSIA supply figures.
 - **Scope 2 figure builder**: how many Scope 2 numbers your company may owe.
+- **Instrument catalogue**: 254 searchable, filterable cards covering carbon taxes, allowances, fuel and vehicle credits, EPR certificates, offsets and removals, attribute certificates, tradable tax credits, ecosystem markets, market infrastructure and claims law, each with verification status.
 - **Cost calculator** comparing reporting cost against turnover and profit.
 - **Cui bono**, eight competing explanations, a verdict by test, a 2027 watchlist, a quiz and a glossary.
-- **287 linked sources**, with sources verified live on 10 November 2026 marked.
+- **630 linked sources** (287 guide sources plus 343 catalogue sources), with sources verified live on 10 November 2026 marked.
 
 Research current to 10 November 2026. Not legal or financial advice.
 
