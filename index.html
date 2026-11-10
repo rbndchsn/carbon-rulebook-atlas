@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carbon Rulebook Atlas: one tonne, five answers</title>
+<meta name="description" content="An interactive guide to why sustainability reporting and carbon markets became so hard to follow and comply with: regulations, standards, carbon credits and market-based instruments, current to November 2026.">
+<meta property="og:title" content="Carbon Rulebook Atlas: one tonne, five answers">
+<meta property="og:description" content="Interactive guide to sustainability compliance and carbon markets in 2026, with 287 linked sources.">
+<meta name="theme-color" content="#E6EBE3">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&display=swap" rel="stylesheet">
+<style>:root{
+  --paper:#E6EBE3; --slip:#F3F5F1; --ink:#1E2622; --ink2:#4A544E; --rule:#B9C2BA; --rule2:#D3DAD3;
+  --blue:#2D3FC8; --blue-soft:#DDE1F7; --moss:#2E7D4F; --ochre:#8F7A00; --red:#B2302E; --grey:#6B746D;
+  --display:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --text:"Literata",Georgia,"Times New Roman",serif;
+  --measure:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:1.09rem;line-height:1.62;font-optical-sizing:auto}
+a{color:var(--blue);text-underline-offset:.18em}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:3px}
+button{font:inherit;color:inherit}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--slip);padding:.6rem 1rem;z-index:99}
+.skip:focus{left:1rem}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.08;margin:0;color:var(--ink)}
+h2{font-size:clamp(1.9rem,3.6vw,2.7rem);font-weight:800;font-stretch:112%;letter-spacing:-.01em}
+h3{font-size:1.32rem;font-weight:700;font-stretch:100%;margin-top:2.2rem}
+h4{font-size:1.04rem;font-weight:700}
+p{margin:.8rem 0}
+.num{font-family:var(--display);font-variant-numeric:tabular-nums lining-nums}
+abbr[title]{text-decoration:underline dotted var(--grey);text-underline-offset:.2em;cursor:help}
+
+/* ---------- Hero / tonne explorer ---------- */
+.hero{padding:clamp(1.5rem,4vw,3.5rem) clamp(1rem,4vw,3rem) 2.5rem;max-width:1240px;margin:0 auto}
+.masthead{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap;font-family:var(--display);font-size:.92rem;color:var(--ink2)}
+.masthead strong{color:var(--ink);font-weight:700}
+.hero h1{font-size:clamp(3rem,9vw,7.4rem);font-weight:900;font-stretch:125%;letter-spacing:-.035em;line-height:.88;margin:1.6rem 0 1.1rem}
+.hero h1 span{display:block;font-stretch:75%;font-weight:300;letter-spacing:-.01em}
+.lede{font-size:clamp(1.12rem,1.9vw,1.38rem);max-width:58ch;margin:0 0 2rem}
+.serial{display:inline-flex;align-items:center;gap:.7rem;background:var(--ink);color:var(--slip);border-radius:999px;padding:.55rem 1.1rem .55rem .6rem;font-family:var(--display);font-variant-numeric:tabular-nums;font-size:.95rem}
+.serial b{background:var(--slip);color:var(--ink);border-radius:999px;padding:.2rem .7rem;font-weight:800}
+.explorer{margin-top:1.4rem;background:var(--slip);border:1.5px solid var(--ink);border-radius:14px;padding:clamp(1rem,2.5vw,1.8rem)}
+.explorer-q{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:0 0 .7rem}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.3rem}
+.pill{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:.38rem .85rem;font-family:var(--display);font-size:.9rem;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--slip)}
+.pill:hover{background:var(--rule2)}
+.pill[aria-pressed="true"]:hover{background:var(--ink)}
+.ledgers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem}
+.ledger{border-top:4px solid var(--c,var(--grey));background:var(--paper);border-radius:0 0 8px 8px;padding:.75rem .8rem .9rem;text-align:left;cursor:pointer;border-left:0;border-right:0;border-bottom:0;display:flex;flex-direction:column;gap:.35rem;min-height:9.5rem;transition:transform .18s ease}
+.ledger:hover{transform:translateY(-2px)}
+.ledger[aria-expanded="true"]{background:var(--ink);color:var(--slip)}
+.ledger .who{font-family:var(--display);font-size:.82rem;color:inherit;opacity:.8}
+.ledger .verdict{font-family:var(--display);font-weight:800;font-size:1.02rem;display:flex;gap:.4rem;align-items:flex-start;line-height:1.15}
+.ledger .verdict i{font-style:normal;display:inline-grid;place-items:center;min-width:1.35rem;height:1.35rem;border-radius:50%;background:var(--c);color:#fff;font-size:.8rem}
+.ledger .short{font-family:var(--display);font-size:.84rem;line-height:1.35;opacity:.85}
+.drawer{margin-top:1rem;border-left:4px solid var(--c,var(--blue));background:var(--paper);padding:1rem 1.2rem;border-radius:0 8px 8px 0}
+.drawer h4{margin-bottom:.3rem}
+.legend{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.1rem;font-family:var(--display);font-size:.85rem;color:var(--ink2)}
+.legend span{display:inline-flex;gap:.35rem;align-items:center}
+.legend i{font-style:normal;display:inline-grid;place-items:center;width:1.1rem;height:1.1rem;border-radius:50%;background:var(--c);color:#fff;font-size:.68rem}
+.s-counts{--c:var(--moss)} .s-cond{--c:var(--blue)} .s-sep{--c:var(--ochre)} .s-out{--c:var(--red)} .s-open{--c:var(--grey)}
+
+/* ---------- Layout ---------- */
+.shell{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);max-width:1240px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem) 5rem}
+.toc{position:sticky;top:1rem;align-self:start;font-family:var(--display);font-size:.92rem;max-height:calc(100vh - 2rem);overflow:auto;padding-top:2.5rem}
+.toc p{margin:0 0 .6rem;font-weight:700}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:ch}
+.toc li{counter-increment:ch}
+.toc a{display:grid;grid-template-columns:1.9rem 1fr;padding:.32rem 0;color:var(--ink2);text-decoration:none;border-left:2px solid transparent;padding-left:.5rem}
+.toc a::before{content:counter(ch);font-variant-numeric:tabular-nums;color:var(--grey)}
+.toc li.x a::before{content:"·"}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--ink);border-left-color:var(--blue);font-weight:700}
+.progress{height:4px;background:var(--rule2);border-radius:2px;margin:.9rem 0 0}
+.progress div{height:100%;width:0;background:var(--blue);border-radius:2px}
+main{min-width:0}
+section.ch{padding-top:3.2rem;scroll-margin-top:.5rem}
+.ch-no{font-family:var(--display);font-weight:300;font-stretch:75%;font-size:1.25rem;color:var(--grey);margin-bottom:.2rem;display:block}
+.prose{max-width:var(--measure)}
+.gist{font-size:1.2rem;line-height:1.55;margin:1rem 0 1.2rem;max-width:var(--measure)}
+
+/* depth toggles */
+details.depth{max-width:var(--measure);border-top:1px solid var(--rule);margin:0}
+details.depth:last-of-type{border-bottom:1px solid var(--rule)}
+details.depth>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 0;font-family:var(--display);font-weight:700;font-size:1.02rem}
+details.depth>summary::-webkit-details-marker{display:none}
+details.depth>summary::after{content:"+";font-weight:400;font-size:1.5rem;line-height:1;color:var(--blue)}
+details.depth[open]>summary::after{content:"−"}
+details.depth>summary small{font-weight:400;color:var(--grey);font-size:.85rem;margin-left:.5rem}
+details.depth>div{padding:0 0 1.2rem}
+
+/* citations */
+.c{font-family:var(--display);font-size:.7em;vertical-align:.45em;line-height:1;margin-left:.08em;white-space:nowrap}
+.c button{display:inline-block;line-height:1.15;border:0;background:var(--blue-soft);color:var(--blue);border-radius:4px;padding:.15em .32em;cursor:pointer;font-variant-numeric:tabular-nums;font-weight:600}
+.c button.v{background:var(--blue);color:#fff}
+.pop{position:absolute;z-index:50;max-width:min(26rem,92vw);background:var(--ink);color:var(--slip);padding:.8rem 1rem;border-radius:8px;font-family:var(--display);font-size:.86rem;line-height:1.4;box-shadow:0 6px 24px rgba(30,38,34,.25)}
+.pop a{color:#C9D0FF;word-break:break-all}
+.pop .tag{display:inline-block;margin-top:.4rem;color:#E8D98A}
+.pop .ver{display:inline-block;margin-top:.4rem;color:#B9E4C9}
+
+/* key findings */
+.findings{display:grid;gap:0;margin-top:1.4rem;max-width:var(--measure)}
+.finding{border-top:1px solid var(--rule)}
+.finding:last-child{border-bottom:1px solid var(--rule)}
+.finding>button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:3.2rem 1fr 1.4rem;gap:.8rem;width:100%;padding:1rem 0;cursor:pointer;align-items:baseline}
+.finding>button:focus-visible{outline:3px solid var(--blue)}
+.finding .big{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:1.6rem;color:var(--blue)}
+.finding .head{font-family:var(--display);font-weight:700;font-size:1.12rem;line-height:1.25}
+.finding .tog{font-family:var(--display);color:var(--blue);font-size:1.4rem;text-align:right}
+.finding .body{padding:0 0 1.1rem 4rem}
+
+/* status badges */
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--display);font-size:.78rem;font-weight:600;border-radius:999px;padding:.12rem .55rem;border:1.5px solid var(--c);color:var(--c);white-space:nowrap;vertical-align:.12em}
+.badge i{font-style:normal}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:1.2rem 0;max-width:100%}
+table{border-collapse:collapse;font-family:var(--display);font-size:.9rem;min-width:36rem;width:100%}
+th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:700;border-bottom:2px solid var(--ink)}
+td .num,td.num{font-variant-numeric:tabular-nums}
+
+/* timeline */
+.filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}
+.tl{position:relative;margin:1rem 0 0;padding:0;list-style:none;max-width:var(--measure)}
+.tl::before{content:"";position:absolute;left:5.6rem;top:.4rem;bottom:.4rem;width:2px;background:var(--rule)}
+.tl li{position:relative;display:grid;grid-template-columns:5.6rem 1fr;gap:1.1rem}
+.tl li[hidden]{display:none}
+.tl .d{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums;font-size:.92rem;padding-top:.62rem;text-align:right;padding-right:.9rem}
+.tl .dot{position:absolute;left:calc(5.6rem - 5px);top:.95rem;width:12px;height:12px;border-radius:50%;background:var(--slip);border:2.5px solid var(--dc,var(--ink))}
+.tl button{all:unset;box-sizing:border-box;cursor:pointer;padding:.5rem 0 .5rem .2rem;display:block;width:100%}
+.tl button:focus-visible{outline:3px solid var(--blue)}
+.tl .t{font-family:var(--display);font-weight:600;line-height:1.3;display:block}
+.tl .dom{font-family:var(--display);font-size:.78rem;color:var(--ink2)}
+.tl .more{padding:0 0 .9rem .2rem;font-size:.98rem}
+.tl .more p{margin:.3rem 0}
+
+/* gates */
+.gates{max-width:var(--measure);margin-top:1rem}
+.gate-track{display:grid;grid-template-columns:repeat(7,1fr);gap:.3rem;margin:1rem 0}
+.gate-track button{border:1.5px solid var(--ink);background:var(--slip);border-radius:6px;padding:.55rem .2rem;font-family:var(--display);font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums}
+.gate-track button.done{background:var(--ink);color:var(--slip)}
+.gate-track button[aria-current="step"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.gate-card{background:var(--slip);border-radius:10px;padding:1rem 1.2rem;border:1px solid var(--rule)}
+.gate-nav{display:flex;gap:.6rem;margin-top:.8rem}
+.btn{border:1.5px solid var(--ink);background:var(--ink);color:var(--slip);border-radius:8px;padding:.5rem .95rem;font-family:var(--display);font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.funnel{margin-top:1.4rem}
+.fbar{display:grid;grid-template-columns:12rem 1fr;gap:.7rem;align-items:center;margin:.35rem 0;font-family:var(--display);font-size:.88rem}
+.fbar .bar{height:22px;background:var(--rule2);border-radius:0 4px 4px 0;position:relative}
+.fbar .bar span{position:absolute;inset:0 auto 0 0;background:var(--ink);border-radius:0 4px 4px 0}
+.fbar .bar span.r{background:repeating-linear-gradient(135deg,var(--ink2) 0 5px,var(--rule) 5px 9px)}
+
+/* builder */
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.4rem;margin-top:1rem;background:var(--slip);border-radius:12px;padding:1.2rem;border:1px solid var(--rule)}
+.builder fieldset{border:0;margin:0;padding:0}
+.builder legend{font-family:var(--display);font-weight:700;margin-bottom:.5rem}
+.chk{display:flex;gap:.6rem;align-items:flex-start;margin:.5rem 0;font-family:var(--display);font-size:.95rem;cursor:pointer}
+.chk input{width:1.15rem;height:1.15rem;margin-top:.15rem;accent-color:var(--blue)}
+.stack{list-style:none;margin:0;padding:0}
+.stack li{border-left:4px solid var(--blue);background:var(--paper);margin:.4rem 0;padding:.5rem .75rem;border-radius:0 6px 6px 0;font-family:var(--display);font-size:.9rem}
+.stack li b{display:block}
+.count{font-family:var(--display);font-weight:900;font-stretch:125%;font-size:3rem;line-height:1;color:var(--blue)}
+
+/* calculator */
+.calc{background:var(--slip);border-radius:12px;border:1px solid var(--rule);padding:1.2rem;margin-top:1rem;max-width:var(--measure)}
+.calc label{display:block;font-family:var(--display);font-weight:600;font-size:.92rem;margin:.8rem 0 .2rem}
+.calc input[type=range]{width:100%;accent-color:var(--blue)}
+.calc output{font-variant-numeric:tabular-nums}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.1rem}
+.readout div{border-top:3px solid var(--ink);padding-top:.5rem}
+.readout .v{font-family:var(--display);font-weight:900;font-stretch:115%;font-size:2.3rem;line-height:1.05}
+.readout .l{font-family:var(--display);font-size:.88rem;color:var(--ink2)}
+.calc .note{font-size:.95rem;margin-top:.9rem}
+
+/* chart */
+.chart{max-width:var(--measure);margin:1.2rem 0;position:relative}
+.chart svg{width:100%;height:auto;display:block}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--slip);font-family:var(--display);font-size:.82rem;padding:.35rem .55rem;border-radius:6px;opacity:0;transition:opacity .1s;white-space:nowrap}
+.chart figcaption{font-family:var(--display);font-size:.86rem;color:var(--ink2);margin-top:.4rem}
+
+/* actors / explanations */
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;margin:1rem 0}
+.seg button{border:0;background:transparent;padding:.42rem .95rem;font-family:var(--display);font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--slip)}
+.actors{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.8rem}
+.actor{background:var(--slip);border-radius:10px;padding:.9rem 1rem;border:1px solid var(--rule)}
+.actor.dim{opacity:.38}
+.actor h4{margin-bottom:.3rem}
+.actor p{font-size:.93rem;margin:.3rem 0;line-height:1.45}
+.lens{border-top:1px solid var(--rule);max-width:var(--measure)}
+.lens:last-child{border-bottom:1px solid var(--rule)}
+.lens summary{list-style:none;cursor:pointer;padding:.95rem 0;display:grid;grid-template-columns:1fr auto;gap:1rem}
+.lens summary::-webkit-details-marker{display:none}
+.lens summary h4{font-size:1.08rem}
+.lens summary small{display:block;font-family:var(--display);color:var(--ink2);font-size:.86rem;margin-top:.2rem;font-weight:400}
+.lens summary::after{content:"+";font-family:var(--display);font-size:1.5rem;color:var(--blue);line-height:1}
+.lens[open] summary::after{content:"−"}
+.forag{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding-bottom:1.1rem}
+.forag div{padding:.6rem .8rem;border-radius:8px;font-size:.95rem}
+.forag .for{background:#E1EDE5}
+.forag .ag{background:#F2E3E1}
+.forag h5{font-family:var(--display);margin:0 0 .3rem;font-size:.86rem}
+
+/* verdict */
+.tests{display:grid;gap:.8rem;max-width:var(--measure);margin-top:1rem}
+.test{background:var(--slip);border-radius:10px;border:1px solid var(--rule);padding:1rem 1.1rem}
+.test h4{font-size:1.12rem}
+.meter{display:flex;gap:4px;margin:.6rem 0}
+.meter span{flex:1;height:10px;background:var(--rule2);border-radius:2px}
+.meter span.on{background:var(--ink)}
+.test .reveal{margin-top:.4rem}
+.verdict-box{margin-top:1.4rem;background:var(--ink);color:var(--slip);border-radius:12px;padding:1.4rem 1.5rem;max-width:var(--measure)}
+.verdict-box h3{color:var(--slip);margin:0 0 .5rem;font-size:1.6rem;font-stretch:115%}
+
+/* watchlist */
+.watch{list-style:none;padding:0;margin:1rem 0;max-width:var(--measure)}
+.watch li{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;border-top:1px solid var(--rule);padding:.8rem 0}
+.watch .when{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums}
+.watch b{font-family:var(--display)}
+.watch p{margin:.2rem 0;font-size:.95rem}
+
+/* quiz */
+.quiz{max-width:var(--measure)}
+.q{background:var(--slip);border-radius:10px;border:1px solid var(--rule);padding:1rem 1.1rem;margin:.8rem 0}
+.q p.qq{font-family:var(--display);font-weight:700;margin:0 0 .6rem}
+.q .opts{display:grid;gap:.4rem}
+.q .opts button{text-align:left;border:1.5px solid var(--rule);background:var(--paper);border-radius:8px;padding:.5rem .75rem;cursor:pointer;font-family:var(--text);font-size:.98rem}
+.q .opts button.right{border-color:var(--moss);background:#E1EDE5}
+.q .opts button.wrong{border-color:var(--red);background:#F2E3E1}
+.q .why{font-size:.95rem;margin-top:.6rem}
+.score{font-family:var(--display);font-weight:800;font-size:1.2rem}
+
+/* glossary & refs */
+.search{width:100%;max-width:var(--measure);padding:.65rem .9rem;border:1.5px solid var(--ink);border-radius:8px;background:var(--slip);font-family:var(--display);font-size:1rem}
+dl.gloss{max-width:var(--measure);display:grid;grid-template-columns:7.5rem 1fr;gap:.25rem 1rem;margin-top:1rem}
+dl.gloss dt{font-family:var(--display);font-weight:800}
+dl.gloss dd{margin:0 0 .5rem;font-size:.97rem}
+dl.gloss .hide{display:none}
+ol.refs{font-family:var(--display);font-size:.86rem;max-width:var(--measure);padding-left:3.2rem;line-height:1.45}
+ol.refs li{margin:.35rem 0;scroll-margin-top:1rem}
+ol.refs li[hidden]{display:none}
+ol.refs li:target{background:var(--blue-soft)}
+ol.refs .g{color:var(--ochre);font-weight:600}
+ol.refs .vv{color:var(--moss);font-weight:600}
+.callout{max-width:var(--measure);border-left:4px solid var(--blue);background:var(--slip);padding:.9rem 1.1rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+.callout.warn{border-left-color:var(--red)}
+footer{max-width:1240px;margin:0 auto;padding:2rem clamp(1rem,4vw,3rem) 4rem;font-family:var(--display);font-size:.88rem;color:var(--ink2);border-top:1.5px solid var(--ink)}
+
+@media (max-width:980px){
+  .ledgers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shell{grid-template-columns:1fr}
+  .toc{position:static;max-height:none;padding-top:1rem;border-bottom:1px solid var(--rule);padding-bottom:1rem}
+  .toc ol{columns:2}
+  .builder{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  body{font-size:1.02rem}
+  .pills{flex-wrap:nowrap;overflow-x:auto;padding-bottom:.4rem;scrollbar-width:thin}
+  .pill{flex:0 0 auto}
+  .ledgers{grid-template-columns:1fr}
+  .ledger{min-height:0}
+  .toc ol{columns:1}
+  .tl::before{left:4.3rem}.tl li{grid-template-columns:4.3rem 1fr}.tl .dot{left:calc(4.3rem - 5px)}
+  .gate-track{grid-template-columns:repeat(7,1fr)}
+  .forag,.readout{grid-template-columns:1fr}
+  .finding .body{padding-left:0}
+  dl.gloss{grid-template-columns:1fr}
+  .watch li{grid-template-columns:1fr}
+  details.depth>summary small{display:none}
+  .fbar{grid-template-columns:1fr}
+}
+@media print{.toc,.pills,.filters,.seg,.gate-nav{display:none}.shell{display:block}details{open:true}}
+</style>
+</head>
+<body>
+<a class="skip" href="#start">Skip to the guide</a>
+<header class="hero">
+  <div class="masthead"><span><strong>Carbon Rulebook Atlas</strong>, an interactive guide to sustainability and carbon-market compliance</span><span>Updated 10 November 2026</span></div>
+  <h1>One tonne.<span>Five answers.</span></h1>
+  <p class="lede">The same tonne of carbon can count, be reported on the side, be banned from a claim, or not exist at all, depending on which rulebook you ask. Pick an instrument and see what each one says.</p>
+  <span class="serial" aria-hidden="true"><b>1 tCO2e</b><span id="serialText">REC · unbundled · vintage 2026</span></span>
+  <div class="explorer" id="explorer">
+    <p class="explorer-q" id="exq">What are you holding?</p>
+    <div class="pills" role="group" aria-labelledby="exq" id="pills"></div>
+    <p id="instrDesc" class="prose" style="margin-top:0"></p>
+    <div class="ledgers" id="ledgers"></div>
+    <div class="drawer" id="drawer" hidden></div>
+    <div class="legend" id="legend"></div>
+  </div>
+</header>
+
+<div class="shell">
+<nav class="toc" aria-label="Chapters">
+  <p>Guide</p>
+  <ol id="toc">
+    <li><a href="#start">Start here</a></li>
+    <li><a href="#year">2026 in 33 events</a></li>
+    <li><a href="#mandatory">Mandatory rules shrank</a></li>
+    <li><a href="#voluntary">Standards moved at once</a></li>
+    <li><a href="#alliances">Alliances retreated</a></li>
+    <li><a href="#markets">Carbon markets</a></li>
+    <li><a href="#mbi">Market-based instruments</a></li>
+    <li><a href="#cost">Costs and who benefits</a></li>
+    <li><a href="#lenses">Eight explanations</a></li>
+    <li><a href="#verdict">The verdict</a></li>
+    <li><a href="#watch">What to watch in 2027</a></li>
+    <li><a href="#quiz">Test yourself</a></li>
+    <li class="x"><a href="#glossary">Glossary</a></li>
+    <li class="x"><a href="#sources">Sources and method</a></li>
+  </ol>
+  <div class="progress" aria-hidden="true"><div id="prog"></div></div>
+</nav>
+
+<main id="main">
+
+<section class="ch" id="start">
+  <span class="ch-no">Chapter 1</span>
+  <h2>Start here</h2>
+  <p class="gist">By November 2026 the system hadn’t collapsed. It had hollowed out. The headline structures survive, but their binding parts (the 2050 dates, civil liability, hourly matching, financed-emissions targets) were removed or deferred, and one tonne no longer means the same thing in law, targets, markets and marketing.</p>
+  <p class="prose">Every number in this guide links to its source; press a number to see it. Open the six findings below, or follow the chapters in order.</p>
+  <div class="findings" id="findings">
+    <div class="finding"><button aria-expanded="false"><span class="big num">78%</span><span class="head">“Simplification” mostly meant removing reporters</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>Of the Commission’s €6.3bn a year in Omnibus savings, €4.9bn comes from cutting companies out of scope and only about €0.5bn from simpler standards <span class="c"><button type="button" data-r="9" class="" aria-label="Source 9">9</button></span>. The revised ESRS cut mandatory datapoints by 61%, but preparers expect only about 20% lower recurring cost <span class="c"><button type="button" data-r="15" class="" aria-label="Source 15">15</button></span>.</p></div></div>
+    <div class="finding"><button aria-expanded="false"><span class="big num">12%</span><span class="head">Companies blocked stricter electricity accounting</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>Only 12% of companies supported hourly matching <span class="c"><button type="button" data-r="181" class="" aria-label="Source 181">181</button></span>, and in April 2026 more than 48 companies including Apple and Amazon publicly asked for the rules to be optional <span class="c"><button type="button" data-r="261" class="v" aria-label="Source 261">261</button></span><span class="c"><button type="button" data-r="262" class="v" aria-label="Source 262">262</button></span>. In October the GHG Protocol let the 2015 method continue until an undetermined date <span class="c"><button type="button" data-r="7" class="" aria-label="Source 7">7</button></span><span class="c"><button type="button" data-r="276" class="v" aria-label="Source 276">276</button></span>.</p></div></div>
+    <div class="finding"><button aria-expanded="false"><span class="big num">6</span><span class="head">One company may need six different Scope 2 numbers</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>A CSRD reporter with an SBTi target and RE100 membership can owe location-based, two market-based, an SBTi electricity percentage, an RE100 percentage and a proposed impact figure. Each is legitimate under its own rulebook; none reconciles to another. Try the builder in chapter 7.</p></div></div>
+    <div class="finding"><button aria-expanded="false"><span class="big num">7</span><span class="head">A carbon credit now has to pass seven gates</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>Methodology, quality label, ratings, host authorisation, corresponding adjustment, claims code and legal review. They don’t nest, so a credit can carry the ICVCM label yet be ineligible for CORSIA <span class="c"><button type="button" data-r="43" class="" aria-label="Source 43">43</button></span><span class="c"><button type="button" data-r="47" class="" aria-label="Source 47">47</button></span>. CORSIA’s first phase needs 100–250M units; only about 33–38M had cleared every gate <span class="c"><button type="button" data-r="43" class="" aria-label="Source 43">43</button></span><span class="c"><button type="button" data-r="170" class="" aria-label="Source 170">170</button></span>.</p></div></div>
+    <div class="finding"><button aria-expanded="false"><span class="big num">2028</span><span class="head">Infrastructure is ahead of the accounting rules</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>Registries for SAF, steel and shipping certificates are trading now, but the GHG Protocol won’t publish its consolidated standard until Q4 2028, and it currently bars market-based Scope 3 from the inventory <span class="c"><button type="button" data-r="34" class="" aria-label="Source 34">34</button></span>. SBTi V2 recognises commodity certificates from February 2027 <span class="c"><button type="button" data-r="5" class="" aria-label="Source 5">5</button></span><span class="c"><button type="button" data-r="12" class="" aria-label="Source 12">12</button></span>.</p></div></div>
+    <div class="finding"><button aria-expanded="false"><span class="big num">$6.8m</span><span class="head">New asset classes: many rulebooks, little money</span><span class="tog" aria-hidden="true">+</span></button><div class="body" hidden><p>Voluntary biodiversity credits have sold about $6.8m since 2022 <span class="c"><button type="button" data-r="57" class="" aria-label="Source 57">57</button></span>, against a $942bn a year biodiversity finance gap <span class="c"><button type="button" data-r="213" class="" aria-label="Source 213">213</button></span>. None of the four biodiversity standards assessed by B4B+ reached its high-integrity threshold <span class="c"><button type="button" data-r="56" class="" aria-label="Source 56">56</button></span>, and they sit outside both the new US accounting standard and UNIDROIT’s draft property principles <span class="c"><button type="button" data-r="59" class="" aria-label="Source 59">59</button></span><span class="c"><button type="button" data-r="60" class="" aria-label="Source 60">60</button></span>.</p></div></div>
+  </div>
+</section>
+
+<section class="ch" id="year">
+  <span class="ch-no">Chapter 2</span>
+  <h2>2026 in 33 events</h2>
+  <p class="gist">Between February and November nearly every rulebook moved at once. Filter by area and press an event for the detail.</p>
+  <div class="filters" id="tlFilters" role="group" aria-label="Filter events"></div>
+  <ol class="tl" id="timeline"></ol>
+</section>
+
+<section class="ch" id="mandatory">
+  <span class="ch-no">Chapter 3</span>
+  <h2>The mandatory rules shrank by scope, not by simplification</h2>
+  <p class="gist">The EU cut who has to report far more than what they report. The US federal layer retreated while states built their own. The ISSB “global baseline” became a menu.</p>
+  <details class="depth"><summary>The EU Omnibus <small>CSRD, CSDDD, ESRS</small></summary><div>
+    <p>Directive (EU) 2026/470 was published on 26 February 2026 and took effect on 18 March <span class="c"><button type="button" data-r="1" class="" aria-label="Source 1">1</button></span><span class="c"><button type="button" data-r="278" class="v" aria-label="Source 278">278</button></span>. CSRD now covers EU companies with more than 1,000 employees and €450m turnover from FY2027; CSDDD covers more than 5,000 employees and €1.5bn from 26 July 2029, with EU-wide civil liability and the climate-transition-plan duty deleted and penalties capped at 3% of turnover <span class="c"><button type="button" data-r="1" class="" aria-label="Source 1">1</button></span><span class="c"><button type="button" data-r="2" class="" aria-label="Source 2">2</button></span>. The original CSRD would have covered about 50,000 companies <span class="c"><button type="button" data-r="23" class="" aria-label="Source 23">23</button></span>.</p>
+    <p>The revised ESRS were adopted on 3 July, published as Delegated Regulation (EU) 2026/1563 on 21 September, and came into force on 10 November 2026 <span class="c"><button type="button" data-r="13" class="" aria-label="Source 13">13</button></span><span class="c"><button type="button" data-r="267" class="v" aria-label="Source 267">267</button></span>. For FY2026 companies can stay on the old ESRS (with or without new reliefs) or adopt the revised set early, as long as they say which <span class="c"><button type="button" data-r="13" class="" aria-label="Source 13">13</button></span><span class="c"><button type="button" data-r="267" class="v" aria-label="Source 267">267</button></span>. Comparability, the point of mandatory reporting, is degraded during the transition by design.</p>
+    <p>The sequence also shows the whiplash: a “stop-the-clock” delay in 2025, a Parliament position in November 2025 that would have set a 1,750-employee threshold, a final vote of 428–218–17 in December, then the final law <span class="c"><button type="button" data-r="23" class="" aria-label="Source 23">23</button></span><span class="c"><button type="button" data-r="81" class="" aria-label="Source 81">81</button></span>. That is two enacted scope regimes and one proposed in 18 months.</p>
+  </div></details>
+  <details class="depth"><summary>What it costs <small>and the figure everyone quotes</small></summary><div>
+    <p>EFRAG puts first-year internal ESRS costs at €130k for preparers under 10,000 employees and €540k above that, plus €40k–390k of consultancy; survey medians were about €500k internal and €300k external. The 2020 impact assessment had assumed €128,848 a year <span class="c"><button type="button" data-r="15" class="" aria-label="Source 15">15</button></span>.</p>
+    <figure class="chart" id="costChart" data-title="CSRD cost per company, assumed vs reported (€ thousands)"></figure>
+    <p>That 3–7 times gap, more than any datapoint count, fuelled the “bureaucracy monster” politics <span class="c"><button type="button" data-r="9" class="" aria-label="Source 9">9</button></span>. Whether €0.8m is a lot depends on what you divide it by; chapter 8 has a calculator.</p>
+  </div></details>
+  <details class="depth"><summary>Carbon pricing and product rules <small>CBAM, ETS2, EUDR, green claims</small></summary><div>
+    <p>CBAM is the one clean example of simplification that kept coverage: the 50-tonne threshold exempts about 90% of roughly 200,000 importers while keeping 99% of embedded emissions, by the Commission’s estimate <span class="c"><button type="button" data-r="27" class="" aria-label="Source 27">27</button></span><span class="c"><button type="button" data-r="87" class="" aria-label="Source 87">87</button></span>. Certificate sales start on 1 February 2027 <span class="c"><button type="button" data-r="24" class="" aria-label="Source 24">24</button></span>, and the UK’s own CBAM starts on 1 January 2027 with no link to the EU scheme yet <span class="c"><button type="button" data-r="89" class="" aria-label="Source 89">89</button></span>.</p>
+    <p>ETS2 was pushed to 2028 <span class="c"><button type="button" data-r="25" class="" aria-label="Source 25">25</button></span>. The deforestation regulation was delayed twice, to 30 December 2026 for large and medium operators <span class="c"><button type="button" data-r="26" class="" aria-label="Source 26">26</button></span>. The EU ban on offset-based product neutrality claims has applied since 27 September 2026 <span class="c"><button type="button" data-r="8" class="" aria-label="Source 8">8</button></span>, while the broader Green Claims Directive is listed for withdrawal in the Commission’s 2027 work programme and remains formally pending <span class="c"><button type="button" data-r="269" class="v" aria-label="Source 269">269</button></span><span class="c"><button type="button" data-r="270" class="v" aria-label="Source 270">270</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>The United States <small>SEC, California, EPA, anti-ESG</small></summary><div>
+    <p>The SEC rule adopted in March 2024 never took effect; the SEC proposed full rescission on 29 May 2026, estimating compliance at $197,000 to over $739,000 per registrant per year <span class="c"><button type="button" data-r="3" class="" aria-label="Source 3">3</button></span>. No final rescission had been adopted by 10 November <span class="c"><button type="button" data-r="283" class="v" aria-label="Source 283">283</button></span>.</p>
+    <p>California went ahead, erratically: CARB’s SB 253 regulation took effect on 12 October, four weeks before the first Scope 1/2 filing deadline of 10 November <span class="c"><button type="button" data-r="4" class="" aria-label="Source 4">4</button></span>. On 9 November the Ninth Circuit let Scope 1/2 reporting proceed as commercial speech, but found SB 253’s Scope 3 requirement and all of SB 261 likely unconstitutional; one judge would have applied strict scrutiny to both laws <span class="c"><button type="button" data-r="264" class="v" aria-label="Source 264">264</button></span><span class="c"><button type="button" data-r="265" class="v" aria-label="Source 265">265</button></span><span class="c"><button type="button" data-r="266" class="v" aria-label="Source 266">266</button></span>.</p>
+    <p>EPA rescinded the endangerment finding effective 20 April 2026 <span class="c"><button type="button" data-r="63" class="" aria-label="Source 63">63</button></span><span class="c"><button type="button" data-r="64" class="" aria-label="Source 64">64</button></span> and moved the reporting-year 2025 GHGRP deadline to 10 March 2027 without notice and comment <span class="c"><button type="button" data-r="29" class="" aria-label="Source 29">29</button></span>. Meanwhile Texas’s anti-ESG law SB13 was struck down <span class="c"><button type="button" data-r="62" class="" aria-label="Source 62">62</button></span>, and in <i>Texas v. BlackRock</i> the climate commitments that EU and ISSB-aligned regimes encourage are pleaded as a cartel <span class="c"><button type="button" data-r="30" class="" aria-label="Source 30">30</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>The ISSB “global baseline” <small>35 jurisdictions, many versions</small></summary><div>
+    <p>S&amp;P Global counts 35 jurisdictions adopting IFRS S1/S2 in some form <span class="c"><button type="button" data-r="31" class="" aria-label="Source 31">31</button></span>. Australia, Hong Kong and Taiwan mandate only the climate standard; Japan and Korea mandate both; the UK puts S1 and Scope 3 on comply-or-explain <span class="c"><button type="button" data-r="104" class="" aria-label="Source 104">104</button></span><span class="c"><button type="button" data-r="105" class="" aria-label="Source 105">105</button></span>. The ISSB itself added jurisdictional reliefs on warming potentials and the GHG Protocol from 2027 <span class="c"><button type="button" data-r="14" class="" aria-label="Source 14">14</button></span>. Brazil moved to comply-or-explain in June 2026 and Singapore deferred <span class="c"><button type="button" data-r="31" class="" aria-label="Source 31">31</button></span><span class="c"><button type="button" data-r="32" class="" aria-label="Source 32">32</button></span>.</p>
+    <p>A survey of 92 multinationals counts more than 600 reporting provisions worldwide; 57% spend over $1m a year and BASF $10–15m <span class="c"><button type="button" data-r="33" class="" aria-label="Source 33">33</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>Who drove the rollback</summary><div>
+    <p>The Draghi report framed reporting as a top burden <span class="c"><button type="button" data-r="9" class="" aria-label="Source 9">9</button></span>; a centre-right and far-right majority passed Parliament’s position <span class="c"><button type="button" data-r="23" class="" aria-label="Source 23">23</button></span>; and paragraph 12 of the August 2025 US–EU trade deal committed the EU to revisit exactly the CSDDD provisions later deleted <span class="c"><button type="button" data-r="19" class="" aria-label="Source 19">19</button></span>. ExxonMobil held at least 25 meetings with EU institutions <span class="c"><button type="button" data-r="19" class="" aria-label="Source 19">19</button></span>, and Corporate Europe Observatory counts 84% of Omnibus-related Commissioner meetings with business <span class="c"><button type="button" data-r="109" class="" aria-label="Source 109">109</button></span> <span class="badge s-sep"><i>◆</i>advocacy source</span>.</p>
+  </div></details>
+</section>
+
+<section class="ch" id="voluntary">
+  <span class="ch-no">Chapter 4</span>
+  <h2>The voluntary standards all moved at once</h2>
+  <p class="gist">Voluntary standards were supposed to steady the mandatory ones. Instead they moved faster, and most of their new effective dates land around 1 January 2027.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Effective</th><th>Change</th><th>Rework it implies</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1 Jan 2026</td><td>GRI 101 Biodiversity <span class="c"><button type="button" data-r="35" class="" aria-label="Source 35">35</button></span></td><td>New topic disclosures</td></tr>
+      <tr><td class="num">1 Jan 2027</td><td>GHG Protocol Land Sector and Removals Standard <span class="c"><button type="button" data-r="113" class="" aria-label="Source 113">113</button></span></td><td>Land re-baselining; indefinite reversal monitoring</td></tr>
+      <tr><td class="num">1 Jan 2027</td><td>GRI 102 Climate and GRI 103 Energy <span class="c"><button type="button" data-r="35" class="" aria-label="Source 35">35</button></span></td><td>Rebuild old GRI 305 disclosures; transition plan</td></tr>
+      <tr><td class="num">1 Jan 2027</td><td>IFRS S2 amendments <span class="c"><button type="button" data-r="14" class="" aria-label="Source 14">14</button></span></td><td>Category 15 and warming-potential reliefs</td></tr>
+      <tr><td class="num">1 Feb 2027</td><td>SBTi Net-Zero Standard V2.0 <span class="c"><button type="button" data-r="258" class="v" aria-label="Source 258">258</button></span></td><td>New company categories, split Scope 2 targets, certificate rules; V1 submissions until 31 Jan 2028 <span class="c"><button type="button" data-r="271" class="v" aria-label="Source 271">271</button></span></td></tr>
+      <tr><td class="num">FY2027</td><td>Revised ESRS <span class="c"><button type="button" data-r="267" class="v" aria-label="Source 267">267</button></span></td><td>Second ESRS migration</td></tr>
+      <tr><td class="num">Q4 2028</td><td>GHG Protocol–ISO Corporate Standard v3.0 <span class="c"><button type="button" data-r="34" class="" aria-label="Source 34">34</button></span></td><td>Likely inventory restatement</td></tr>
+    </tbody></table></div>
+  <details class="depth"><summary>The GHG Protocol merges with ISO</summary><div>
+    <p>The 2004 Corporate Standard, 2011 Scope 3 Standard and 2015 Scope 2 Guidance are being merged with ISO 14064-1 into one co-branded standard: draft for consultation in Q2 2027, final in Q4 2028, with no effective dates set <span class="c"><button type="button" data-r="6" class="" aria-label="Source 6">6</button></span><span class="c"><button type="button" data-r="34" class="" aria-label="Source 34">34</button></span>. In July 2025 the plan had been final Scope 2 text by mid-2026 <span class="c"><button type="button" data-r="112" class="" aria-label="Source 112">112</button></span>. Proposals on the table include making Scope 3 mandatory with 95% coverage and a new Category 16 for facilitated activities <span class="c"><button type="button" data-r="67" class="" aria-label="Source 67">67</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>SBTi’s turbulent two years</summary><div>
+    <p>In March 2024, 239 companies including Microsoft, Unilever and Walmart were moved to “commitment removed” <span class="c"><button type="button" data-r="115" class="" aria-label="Source 115">115</button></span>; by mid-2025, 93% of them still had no validated net-zero target <span class="c"><button type="button" data-r="38" class="" aria-label="Source 38">38</button></span>. In April 2024 the board announced it would allow certificates and credits for Scope 3, then reversed within a week after a staff revolt <span class="c"><button type="button" data-r="116" class="" aria-label="Source 116">116</button></span>. V2.0, published 11 June 2026, takes effect 1 February 2027 <span class="c"><button type="button" data-r="5" class="" aria-label="Source 5">5</button></span><span class="c"><button type="button" data-r="258" class="v" aria-label="Source 258">258</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>Everything else that moved</summary><div>
+    <p>CDP merged its questionnaires and warns that methodology changes yearly <span class="c"><button type="button" data-r="36" class="" aria-label="Source 36">36</button></span>. TCFD disbanded in 2023 <span class="c"><button type="button" data-r="119" class="" aria-label="Source 119">119</button></span>; the ISSB issued its nature guidance as a voluntary Practice Statement, not a standard <span class="c"><button type="button" data-r="75" class="" aria-label="Source 75">75</button></span>. PAS 2060 was withdrawn in favour of ISO 14068-1 <span class="c"><button type="button" data-r="121" class="" aria-label="Source 121">121</button></span>. ESG ratings still correlate at only 0.54, against 0.92 for credit ratings <span class="c"><button type="button" data-r="125" class="" aria-label="Source 125">125</button></span>.</p>
+    <p>The same philanthropic pool funds both the accounting rule and the target validator: the Bezos Earth Fund gave the GHG Protocol $9.25m and also funds SBTi <span class="c"><button type="button" data-r="129" class="" aria-label="Source 129">129</button></span><span class="c"><button type="button" data-r="117" class="" aria-label="Source 117">117</button></span>. No interference has been shown, but the structure allows it.</p>
+  </div></details>
+</section>
+
+<section class="ch" id="alliances">
+  <span class="ch-no">Chapter 5</span>
+  <h2>The alliances retreated</h2>
+  <p class="gist">Net-zero alliances needed competitors to coordinate, which is exactly the conduct antitrust law polices. They swung between toothless and legally exposed, and mostly chose toothless.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Initiative</th><th>At its peak</th><th>By November 2026</th></tr></thead>
+    <tbody>
+      <tr><td>Net-Zero Banking Alliance</td><td>About 150 banks, $75.5tn <span class="c"><button type="button" data-r="130" class="" aria-label="Source 130">130</button></span></td><td>Ceased operations 3 October 2025; guidance survives <span class="c"><button type="button" data-r="40" class="" aria-label="Source 40">40</button></span><span class="c"><button type="button" data-r="287" class="v" aria-label="Source 287">287</button></span></td></tr>
+      <tr><td>Net Zero Asset Managers</td><td>Over 325 signatories, $57tn+ <span class="c"><button type="button" data-r="41" class="" aria-label="Source 41">41</button></span></td><td>Suspended January 2025; relaunched February 2026 without the 2050 date <span class="c"><button type="button" data-r="41" class="" aria-label="Source 41">41</button></span><span class="c"><button type="button" data-r="131" class="" aria-label="Source 131">131</button></span></td></tr>
+      <tr><td>Net-Zero Insurance Alliance</td><td>About 30 insurers <span class="c"><button type="button" data-r="132" class="" aria-label="Source 132">132</button></span></td><td>Disbanded April 2024 <span class="c"><button type="button" data-r="39" class="" aria-label="Source 39">39</button></span></td></tr>
+      <tr><td>GFANZ</td><td>$130tn headline, criticised as double-counted <span class="c"><button type="button" data-r="133" class="" aria-label="Source 133">133</button></span></td><td>Dropped its net-zero membership requirement <span class="c"><button type="button" data-r="134" class="" aria-label="Source 134">134</button></span><span class="c"><button type="button" data-r="135" class="" aria-label="Source 135">135</button></span></td></tr>
+      <tr><td>Climate Action 100+</td><td>Over 700 investors, $68tn <span class="c"><button type="button" data-r="136" class="" aria-label="Source 136">136</button></span></td><td>Over 600 signatories after 70+ exits <span class="c"><button type="button" data-r="137" class="" aria-label="Source 137">137</button></span><span class="c"><button type="button" data-r="138" class="" aria-label="Source 138">138</button></span></td></tr>
+      <tr><td>RE100</td><td>444 members</td><td>Meta left in July 2026 over new gas plants <span class="c"><button type="button" data-r="273" class="v" aria-label="Source 273">273</button></span></td></tr>
+    </tbody></table></div>
+  <details class="depth"><summary>Why they left</summary><div>
+    <p>The stated reasons were bland. The documented drivers were a coordinated US legal campaign, from state attorneys general to House Judiciary’s “climate cartel” reports to the FTC/DOJ statement backing <i>Texas v. BlackRock</i> <span class="c"><button type="button" data-r="132" class="" aria-label="Source 132">132</button></span><span class="c"><button type="button" data-r="141" class="" aria-label="Source 141">141</button></span><span class="c"><button type="button" data-r="30" class="" aria-label="Source 30">30</button></span>; commercial incentives, with bank fossil financing up 8% to $906bn in 2025 <span class="c"><button type="button" data-r="142" class="" aria-label="Source 142">142</button></span>; and physical reality, from Walmart’s refrigeration and trucking to AI load growth <span class="c"><button type="button" data-r="144" class="" aria-label="Source 144">144</button></span>. Vanguard’s $29.5m settlement now formalises the toothless option <span class="c"><button type="button" data-r="42" class="" aria-label="Source 42">42</button></span><span class="c"><button type="button" data-r="280" class="v" aria-label="Source 280">280</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>Targets held on paper and eroded underneath</summary><div>
+    <p>64% of 1,957 large listed firms still have net-zero targets, but 20 of the 43 top-50 firms with targets are backtracking, and only 11% of target-holders meet all seven integrity criteria <span class="c"><button type="button" data-r="102" class="" aria-label="Source 102">102</button></span><span class="c"><button type="button" data-r="149" class="" aria-label="Source 149">149</button></span>. “ESG” in S&amp;P 100 report titles fell from 40% to 6% <span class="c"><button type="button" data-r="150" class="" aria-label="Source 150">150</button></span>; environmental and social shareholder proposals fell about 50% between 2024 and 2026 <span class="c"><button type="button" data-r="151" class="" aria-label="Source 151">151</button></span>. EU target coverage rose to 85% <span class="c"><button type="button" data-r="149" class="" aria-label="Source 149">149</button></span>: the retreat is mostly American and financial.</p>
+  </div></details>
+</section>
+
+<section class="ch" id="markets">
+  <span class="ch-no">Chapter 6</span>
+  <h2>Carbon markets got smaller in dollars and larger in gates</h2>
+  <p class="gist">The voluntary market’s value collapsed while its tonnage held. Over-crediting is established; remediation is partial; and every new integrity layer is also a new bottleneck.</p>
+  <figure class="chart" id="vcmChart" data-title="Voluntary carbon market transaction value ($ millions)"></figure>
+  <p class="prose">For scale: compliance carbon-pricing revenue exceeded $107bn in 2025 <span class="c"><button type="button" data-r="46" class="" aria-label="Source 46">46</button></span>, roughly 75–200 times the voluntary market’s $0.5–1.4bn <span class="c"><button type="button" data-r="44" class="" aria-label="Source 44">44</button></span><span class="c"><button type="button" data-r="45" class="" aria-label="Source 45">45</button></span>. Retirements held at about 180–200 Mt a year, reaching 202 Mt in 2025 <span class="c"><button type="button" data-r="45" class="" aria-label="Source 45">45</button></span>.</p>
+  <details class="depth"><summary>The over-crediting evidence</summary><div>
+    <p>A synthesis covering about 1bn tonnes found under 16% of credits represent real reductions <span class="c"><button type="button" data-r="158" class="" aria-label="Source 158">158</button></span>. REDD+ projects offset about three times their actual effect <span class="c"><button type="button" data-r="159" class="" aria-label="Source 159">159</button></span> (Verra disputes this <span class="c"><button type="button" data-r="160" class="" aria-label="Source 160">160</button></span>); cookstoves are over-credited 9.2-fold <span class="c"><button type="button" data-r="161" class="" aria-label="Source 161">161</button></span>; at least 52% of Indian wind offsets went to projects likely built anyway <span class="c"><button type="button" data-r="162" class="" aria-label="Source 162">162</button></span>.</p>
+    <p>New issuance did tighten: Verra’s new REDD+ method cuts volumes by about 40% on a preliminary sample <span class="c"><button type="button" data-r="164" class="" aria-label="Source 164">164</button></span>, and the ICVCM rejected grid renewables <span class="c"><button type="button" data-r="165" class="" aria-label="Source 165">165</button></span>. But legacy stock stays tradable. At Kariba, Verra found 57% of about 27M credits issued in excess, yet buyers’ retirements “remain valid” <span class="c"><button type="button" data-r="166" class="" aria-label="Source 166">166</button></span>. Two ICVCM expert advisers resigned when it labelled REDD+ methods in 2024 <span class="c"><button type="button" data-r="167" class="" aria-label="Source 167">167</button></span><span class="c"><button type="button" data-r="286" class="v" aria-label="Source 286">286</button></span>, and the UN mechanism approved grid renewables in July 2026, two years after the ICVCM rejected them <span class="c"><button type="button" data-r="48" class="" aria-label="Source 48">48</button></span>.</p>
+  </div></details>
+  <h3>Walk a credit through the seven gates</h3>
+  <p class="prose">A buyer who wants a defensible claim has to clear every gate, and they don’t nest. Step through them.</p>
+  <div class="gates" id="gates">
+    <div class="gate-track" id="gateTrack" role="tablist" aria-label="Gates"></div>
+    <div class="gate-card" id="gateCard" role="tabpanel" aria-live="polite"></div>
+    <div class="gate-nav"><button class="btn ghost" id="gPrev">Previous gate</button><button class="btn" id="gNext">Next gate</button></div>
+    <div class="funnel" aria-label="CORSIA Phase 1 demand and eligible supply, millions of units">
+      <h4>What the gates do to supply: CORSIA’s first phase <span class="c"><button type="button" data-r="43" class="" aria-label="Source 43">43</button></span><span class="c"><button type="button" data-r="170" class="" aria-label="Source 170">170</button></span></h4>
+      <div class="fbar"><span>Demand, high (IATA) 250M</span><div class="bar"><span style="width:100%"></span></div></div>
+      <div class="fbar"><span>Demand, low (ICAO) 100M</span><div class="bar"><span style="width:40%"></span></div></div>
+      <div class="fbar"><span>Cleared every gate 33–38M</span><div class="bar"><span class="r" style="width:15.2%"></span></div></div>
+      <p class="prose" style="font-size:.95rem">100–250M units needed; about 33–38M eligible by mid-2026. Authorisation scarcity now sets prices: CORSIA eligibility moved one cookstove project from about $5 to about $20 <span class="c"><button type="button" data-r="170" class="" aria-label="Source 170">170</button></span>.</p>
+    </div>
+  </div>
+  <details class="depth"><summary>Durable carbon removal is one buyer’s balance sheet</summary><div>
+    <p>Microsoft held 78.5% of cumulative contracted durable removal tonnes in April 2026, about 36.4 Mt, but had received only about 91 kt <span class="c"><button type="button" data-r="175" class="" aria-label="Source 175">175</button></span>. A reported “pause” that month shook the segment until Microsoft said the programme had not ended and signed another deal <span class="c"><button type="button" data-r="68" class="" aria-label="Source 68">68</button></span><span class="c"><button type="button" data-r="255" class="v" aria-label="Source 255">255</button></span>.</p>
+  </div></details>
+</section>
+
+<section class="ch" id="mbi">
+  <span class="ch-no">Chapter 7</span>
+  <h2>Market-based instruments: where the rules are being rebuilt</h2>
+  <p class="gist">Certificates and credits are fungible on paper and not in the rulebooks. The 2026 settlement keeps the physical inventory clean by pushing instruments into separate ledgers. The explorer at the top of this page maps every instrument; this chapter explains why.</p>
+  <h3>Scope 2: how many numbers will you owe?</h3>
+  <p class="prose">Tick what applies to your company. Each figure is legitimate under its own rulebook, and none reconciles to another.</p>
+  <div class="builder" id="builder">
+    <fieldset><legend>My situation</legend><div id="s2opts"></div></fieldset>
+    <div><div class="count num" id="s2count">0</div><p style="margin:.2rem 0 .6rem;font-family:var(--display)" id="s2label">Scope 2 figures to produce</p><ul class="stack" id="s2stack"></ul></div>
+  </div>
+  <details class="depth"><summary>Cheap certificates, contested meaning <small>Scope 2</small></summary><div>
+    <p>European Guarantees of Origin traded at €0.57–0.93/MWh <span class="c"><button type="button" data-r="49" class="" aria-label="Source 49">49</button></span><span class="c"><button type="button" data-r="50" class="" aria-label="Source 50">50</button></span>, around 1% of wholesale power prices and well under 1% of retail. In RE100’s 2025 disclosure members claimed 59% renewable electricity; RE100 recognised 43% <span class="c"><button type="button" data-r="178" class="" aria-label="Source 178">178</button></span>. Peer-reviewed work found certificates overstated Scope 2 reductions about threefold <span class="c"><button type="button" data-r="179" class="" aria-label="Source 179">179</button></span>.</p>
+    <p>For data centres the gap between location- and market-based figures is the central fact: in 2025 location-based Scope 2 rose 29% at Google and 15% at Microsoft <span class="c"><button type="button" data-r="21" class="" aria-label="Source 21">21</button></span>. Microsoft’s total rose 25% to 20.29 Mt, partly because it stopped buying unbundled certificates, which took market-based Scope 2 from about 258 kt to about 2.7 Mt <span class="c"><button type="button" data-r="255" class="v" aria-label="Source 255">255</button></span><span class="c"><button type="button" data-r="256" class="v" aria-label="Source 256">256</button></span>.</p>
+    <p>The GHG Protocol’s fix met its own constituency: only 12% of companies backed hourly matching and 19% deliverability <span class="c"><button type="button" data-r="181" class="" aria-label="Source 181">181</button></span>. Its standards board moved to two methods: Method 1 (hourly, deliverable, incremental) companies “should” use, and Method 2 (the 2015 rules) they “may” keep until an undetermined date <span class="c"><button type="button" data-r="10" class="" aria-label="Source 10">10</button></span><span class="c"><button type="button" data-r="276" class="v" aria-label="Source 276">276</button></span>. SBTi V2 sidestepped the fight: emissions targets use location-based figures, and certificates count toward a separate low-carbon-electricity target where annual matching is allowed <span class="c"><button type="button" data-r="5" class="" aria-label="Source 5">5</button></span><span class="c"><button type="button" data-r="186" class="" aria-label="Source 186">186</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>The lobbying map, and who won</summary><div>
+    <p>Two corporate blocs fought. The hourly camp: Google, Microsoft and LevelTen through the Granular Certificate Trading Alliance <span class="c"><button type="button" data-r="188" class="" aria-label="Source 188">188</button></span>. The flexibility camp: the Emissions First Partnership, co-founded by Amazon and Meta, which promotes consequential “emissions-impact” accounting <span class="c"><button type="button" data-r="189" class="" aria-label="Source 189">189</button></span>, plus the April 2026 public statement by 48–60+ companies including Apple, Amazon, BYD, Salesforce, Mars and Schneider Electric <span class="c"><button type="button" data-r="261" class="v" aria-label="Source 261">261</button></span><span class="c"><button type="button" data-r="262" class="v" aria-label="Source 262">262</button></span><span class="c"><button type="button" data-r="263" class="v" aria-label="Source 263">263</button></span>. InfluenceMap found the big tech companies absent from the formal consultation responses, and more than half of 1,072 responses anonymous <span class="c"><button type="button" data-r="20" class="" aria-label="Source 20">20</button></span>.</p>
+    <p>The flexibility camp won the inventory, because Method 2 survives. The consequential camp won a venue: a proposed “impact statement” under the market-instruments work <span class="c"><button type="button" data-r="190" class="" aria-label="Source 190">190</button></span>. Registries win either way.</p>
+  </div></details>
+  <details class="depth"><summary>Scope 3: book-and-claim has outrun the accounting <small>SAF, steel, shipping, biomethane</small></summary><div>
+    <p>Three layers disagree. The GHG Protocol says market-based approaches for SAF, biomethane and steel “are not included in or allowed under” its Corporate or Scope 3 Standard <span class="c"><button type="button" data-r="34" class="" aria-label="Source 34">34</button></span>; its market-instruments consultation proposes separate statements, backed by 84% of respondents <span class="c"><button type="button" data-r="11" class="" aria-label="Source 11">11</button></span><span class="c"><button type="button" data-r="66" class="" aria-label="Source 66">66</button></span>. SBTi V2 recognises commodity certificates: mass balance within a sourced pool can sit inside the inventory, while book-and-claim supports only a “system contribution” claim, per vendor summaries <span class="c"><button type="button" data-r="12" class="" aria-label="Source 12">12</button></span>. Registries already split units: one RSB unit carries one Scope 1 claim and up to two Scope 3 claims <span class="c"><button type="button" data-r="52" class="" aria-label="Source 52">52</button></span><span class="c"><button type="button" data-r="193" class="" aria-label="Source 193">193</button></span>.</p>
+    <p>Volumes are small: IATA expects about 2.4 Mt of SAF in 2026, 0.8% of airline fuel <span class="c"><button type="button" data-r="197" class="" aria-label="Source 197">197</button></span>. Steel book-and-claim has no independent certification framework yet <span class="c"><button type="button" data-r="200" class="" aria-label="Source 200">200</button></span>, and the IMO’s shipping framework faces another adoption attempt in December 2026 <span class="c"><button type="button" data-r="202" class="" aria-label="Source 202">202</button></span>.</p>
+    <p>A single SAF tonne can appear validly in four places: an airline’s CORSIA or EU ETS claim, a forwarder’s Scope 3, a corporate’s Scope 3 “contribution”, and a supplier’s marketing (inference) <span class="c"><button type="button" data-r="193" class="" aria-label="Source 193">193</button></span><span class="c"><button type="button" data-r="194" class="" aria-label="Source 194">194</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>Insetting and activity pools <small>reductions claimed ahead of the rules</small></summary><div>
+    <p>PepsiCo’s 2025 climate statement appears to use certificates to lower Scope 3 by about 840,000 tCO2e; the company called the figures “directionally correct” <span class="c"><button type="button" data-r="206" class="" aria-label="Source 206">206</button></span>. Nestlé books 3.31 Mt of removals within its net figures “pending SBTi guidance” <span class="c"><button type="button" data-r="207" class="" aria-label="Source 207">207</button></span>. The Value Change Initiative convenes 100+ companies on market-based instruments <span class="c"><button type="button" data-r="208" class="" aria-label="Source 208">208</button></span>; its portal footer suggests SustainCERT operates it, though the site does not say so <span class="c"><button type="button" data-r="208" class="" aria-label="Source 208">208</button></span>. Verra’s Scope 3 Standard Program launched on 15 September 2026, naming SustainCERT among its collaborators; version 1 lists projects but issues no units yet <span class="c"><button type="button" data-r="259" class="v" aria-label="Source 259">259</button></span><span class="c"><button type="button" data-r="260" class="v" aria-label="Source 260">260</button></span>.</p>
+  </div></details>
+  <details class="depth"><summary>Nature, removals, plastic <small>more rulebooks than money</small></summary><div>
+    <p>Bloom Labs counts 58 potential national credit markets <span class="c"><button type="button" data-r="214" class="" aria-label="Source 214">214</button></span>; the Biodiversity Credit Alliance argues against a single fungible unit <span class="c"><button type="button" data-r="215" class="" aria-label="Source 215">215</button></span>. England’s statutory biodiversity net gain extended to major infrastructure on 2 November 2026, but registration “does not show” outcomes delivered <span class="c"><button type="button" data-r="216" class="" aria-label="Source 216">216</button></span><span class="c"><button type="button" data-r="217" class="" aria-label="Source 217">217</button></span>. Fern documented clear-cuts at an EU nature-credit pilot site in Estonia <span class="c"><button type="button" data-r="221" class="" aria-label="Source 221">221</button></span> <span class="badge s-sep"><i>◆</i>advocacy source</span>.</p>
+    <p>The EU’s first removal-certification method entered into force on 7 May 2026, but Öko-Institut judges its integrity below the UN mechanism’s <span class="c"><button type="button" data-r="54" class="" aria-label="Source 54">54</button></span>. Plastic credits fare worst: 86% of one registry’s credits came from co-processing or incineration <span class="c"><button type="button" data-r="223" class="" aria-label="Source 223">223</button></span>. When carbon and biodiversity credits come from the same hectare, only carbon has an international anti-double-counting rule.</p>
+  </div></details>
+  <details class="depth"><summary>Legal and accounting status <small>who owns a credit, and is it an asset?</small></summary><div>
+    <p>FASB’s ASU 2026-02, issued 19 May 2026, creates Topic 818: credits held for voluntary retirement are expensed, compliance credits carried at cost, and habitat, wetland and stream credits fall outside it; it applies to public companies for years starting after 15 December 2027 <span class="c"><button type="button" data-r="59" class="" aria-label="Source 59">59</button></span><span class="c"><button type="button" data-r="284" class="v" aria-label="Source 284">284</button></span><span class="c"><button type="button" data-r="285" class="v" aria-label="Source 285">285</button></span>. UNIDROIT’s draft treats carbon credits as property but excludes biodiversity and plastic credits <span class="c"><button type="button" data-r="60" class="" aria-label="Source 60">60</button></span>. The IASB project sits on its reserve list <span class="c"><button type="button" data-r="225" class="" aria-label="Source 225">225</button></span>.</p>
+    <p>Claims law is now the binding constraint: the EU ban on offset-based neutrality claims <span class="c"><button type="button" data-r="8" class="" aria-label="Source 8">8</button></span>, UK fines up to 10% of turnover <span class="c"><button type="button" data-r="228" class="" aria-label="Source 228">228</button></span>, Australia’s ACCC guidance <span class="c"><button type="button" data-r="74" class="" aria-label="Source 74">74</button></span>, and the Delta case, where damages claims were allowed to proceed on 28 July 2026 <span class="c"><button type="button" data-r="274" class="v" aria-label="Source 274">274</button></span><span class="c"><button type="button" data-r="275" class="v" aria-label="Source 275">275</button></span>. The legal question is shifting from “is the credit real?” to “does the wording match what the instrument supports?”</p>
+  </div></details>
+</section>
+
+<section class="ch" id="cost">
+  <span class="ch-no">Chapter 8</span>
+  <h2>What it costs, and who benefits</h2>
+  <p class="gist">Per-company reporting cost is real. Whether it’s modest depends on the denominator, and the heavier burden falls on suppliers, mid-caps, project developers and on constant change itself.</p>
+  <div class="calc" id="calc">
+    <h4>Is €0.8m a lot? Change the denominator</h4>
+    <label for="cCost">Annual reporting and assurance cost: <output id="oCost" class="num"></output></label>
+    <input type="range" id="cCost" min="100" max="15000" step="50" value="800">
+    <label for="cTurn">Company turnover: <output id="oTurn" class="num"></output></label>
+    <input type="range" id="cTurn" min="50" max="20000" step="50" value="450">
+    <label for="cMarg">Net profit margin: <output id="oMarg" class="num"></output></label>
+    <input type="range" id="cMarg" min="1" max="30" step="0.5" value="5">
+    <div class="readout"><div><div class="v num" id="rTurn"></div><div class="l">of turnover</div></div><div><div class="v num" id="rProf"></div><div class="l">of net profit</div></div></div>
+    <p class="note" id="calcNote"></p>
+    <p class="note" style="color:var(--ink2)">Defaults: €0.8m is the first-wave median (internal plus external) <span class="c"><button type="button" data-r="15" class="" aria-label="Source 15">15</button></span>; €450m is the new CSRD turnover threshold <span class="c"><button type="button" data-r="1" class="" aria-label="Source 1">1</button></span>. The median comes from larger, early preparers, so smaller firms may spend less in absolute terms.</p>
+  </div>
+  <details class="depth"><summary>The cost table</summary><div>
+    <div class="tbl-wrap"><table><thead><tr><th>Item</th><th>Figure</th><th>Source type</th></tr></thead><tbody>
+      <tr><td>CSRD first-year internal</td><td>€130k–540k; medians about €500k internal, €300k external <span class="c"><button type="button" data-r="15" class="" aria-label="Source 15">15</button></span></td><td>Standard-setter survey</td></tr>
+      <tr><td>SEC climate rule</td><td>$197k to over $739k per registrant a year <span class="c"><button type="button" data-r="3" class="" aria-label="Source 3">3</button></span></td><td>Regulator</td></tr>
+      <tr><td>US issuer climate disclosure</td><td>$533k ($677k with voluntary); investors $1.37m <span class="c"><button type="button" data-r="235" class="" aria-label="Source 235">235</button></span></td><td>Survey sponsored by rule supporters</td></tr>
+      <tr><td>Multinational disclosure</td><td>57% spend over $1m a year; BASF $10–15m <span class="c"><button type="button" data-r="33" class="" aria-label="Source 33">33</button></span></td><td>Business association</td></tr>
+      <tr><td>Verra registry fees</td><td>$0.23 per unit issued, $0.02 per retirement <span class="c"><button type="button" data-r="18" class="" aria-label="Source 18">18</button></span></td><td>Trade press</td></tr>
+      <tr><td>Validation and verification</td><td>£10–25k per validation; £6–15k per verification <span class="c"><button type="button" data-r="168" class="" aria-label="Source 168">168</button></span></td><td>Vendor</td></tr>
+      <tr><td>Carbon-rating subscriptions</td><td>$50k–250k a year <span class="c"><button type="button" data-r="234" class="" aria-label="Source 234">234</button></span></td><td>Secondary</td></tr>
+      <tr><td>SAF certificate premium</td><td>$150–500/tCO2e <span class="c"><button type="button" data-r="53" class="" aria-label="Source 53">53</button></span></td><td>Reseller</td></tr>
+      <tr><td>Anti-ESG compliance (Texas SB13)</td><td>$303–532m extra interest in eight months <span class="c"><button type="button" data-r="62" class="" aria-label="Source 62">62</button></span></td><td>Brookings via ABA</td></tr>
+      <tr><td>ESG consulting market</td><td>$11.5bn (2022) to over $48bn forecast (2028) <span class="c"><button type="button" data-r="17" class="" aria-label="Source 17">17</button></span></td><td>Industry analyst</td></tr>
+    </tbody></table></div>
+    <p>Assurance is the hidden heavyweight: in the Commission’s scope-cut savings, auditing (€2bn) exceeds reporting (€1.2bn) <span class="c"><button type="button" data-r="9" class="" aria-label="Source 9">9</button></span>, and green-skills demand grows 11.6% against 5.6% for supply <span class="c"><button type="button" data-r="239" class="" aria-label="Source 239">239</button></span>.</p>
+  </div></details>
+  <h3>Cui bono</h3>
+  <p class="prose">Both “more complexity” and “less regulation” are outcomes that particular interests worked for. Switch the view.</p>
+  <div class="seg" role="group" aria-label="Show actors who gain from"><button aria-pressed="true" data-g="all">Everyone</button><button aria-pressed="false" data-g="complexity">Gains from complexity</button><button aria-pressed="false" data-g="rollback">Gains from rollback</button></div>
+  <div class="actors" id="actors"></div>
+  <p class="callout">The common pattern: fees track volume while losses are pooled. Registries, verifiers and raters are paid whether or not a tonne is real; over-crediting losses go to buffer pools, while the profits stayed private. Kariba earned more than $100m <span class="c"><button type="button" data-r="166" class="" aria-label="Source 166">166</button></span>.</p>
+</section>
+
+<section class="ch" id="lenses">
+  <span class="ch-no">Chapter 9</span>
+  <h2>Eight ways to explain it</h2>
+  <p class="gist">The critics agree on the diagnosis and split on the remedy. Each explanation below has real evidence for it and real evidence against.</p>
+  <div id="lensList"></div>
+  <p class="prose" style="margin-top:1.2rem">The weight of evidence supports a combined reading: measurement works where it is narrow, physical and priced (Scope 1 at large emitters, the EU ETS, CBAM’s threshold) and degrades as it extends into value-chain estimation, contractual attribution and claims, which is exactly where 2024–26 rule-making and lobbying concentrated.</p>
+</section>
+
+<section class="ch" id="verdict">
+  <span class="ch-no">Chapter 10</span>
+  <h2>So, is it unsustainable?</h2>
+  <p class="gist">Four tests. Make your own call before you reveal the answer.</p>
+  <div class="tests" id="tests"></div>
+  <div class="verdict-box">
+    <h3>Hollowing, not collapse</h3>
+    <p>The system is unsustainable as an integrated claims architecture: the promise that one inventory could flow through law, targets, markets and marketing has failed, and the 2026 settlement formally swaps it for separate ledgers. It remains resilient as an industry and as a set of narrower physical regimes, with more than $107bn in compliance carbon-pricing revenue, CBAM live, and 64% of large firms still holding net-zero targets <span class="c"><button type="button" data-r="46" class="" aria-label="Source 46">46</button></span><span class="c"><button type="button" data-r="102" class="" aria-label="Source 102">102</button></span>.</p>
+    <p>For a verifier, assurance shifts from “is this number right?” to “is this number labelled with the right method, ledger and claim?” That work scales with the number of ledgers rather than with emissions.</p>
+  </div>
+</section>
+
+<section class="ch" id="watch">
+  <span class="ch-no">Chapter 11</span>
+  <h2>What to watch in 2027</h2>
+  <p class="gist">The decisive conflicts are still open. Here they are in date order.</p>
+  <ul class="watch" id="watchList"></ul>
+  <p class="callout">The pattern to watch, as a hypothesis for climate metrics: simplification that cuts by emissions materiality, as CBAM did, keeps the signal; simplification that cuts by company size or by optionality keeps the industry and hollows out the signal. CBAM’s 99% coverage figure is the Commission’s own estimate <span class="c"><button type="button" data-r="27" class="" aria-label="Source 27">27</button></span>, and the logic doesn’t carry over directly to human-rights due diligence.</p>
+</section>
+
+<section class="ch" id="quiz">
+  <span class="ch-no">Chapter 12</span>
+  <h2>Test yourself</h2>
+  <p class="gist">Eight questions. Each answer explains itself.</p>
+  <p class="score" id="score" aria-live="polite">0 of 8 answered</p>
+  <div class="quiz" id="quizList"></div>
+</section>
+
+<section class="ch" id="glossary">
+  <h2>Glossary</h2>
+  <p class="gist">Acronyms in the guide are underlined; hover or focus them for a definition.</p>
+  <label for="gSearch" class="prose" style="display:block;font-family:var(--display);margin-bottom:.4rem">Search the glossary</label>
+  <input class="search" id="gSearch" type="search" placeholder="Try CBAM, mass balance, LoA">
+  <dl class="gloss" id="glossList"></dl>
+</section>
+
+<section class="ch" id="sources">
+  <h2>Sources and method</h2>
+  <div class="prose">
+    <p>This guide condenses a 13,000-word research report built from ten research notes (254 sources cited), and an independent review of that report. The review traced all 254 references and 371 of 374 figures back to the notes, re-checked 17 high-risk claims against live sources on 10 November 2026 (all real), and found seven items that needed updating. Those corrections are applied here: the Ninth Circuit ruling, the revised ESRS, the Green Claims Directive’s status, Verra’s Scope 3 launch, Microsoft’s figures, Meta’s RE100 exit and the April 2026 corporate statement on Scope 2.</p>
+    <p>Source numbers in <span class="c"><button class="v" tabindex="-1" aria-hidden="true">#</button></span> solid blue were verified live on 10 November 2026. Vendor, advocacy and secondary sources are labelled in the list. Statements marked as inference are analysis, not sourced fact.</p>
+    <p class="callout"><strong>Disclosure.</strong> The author, Robin Duchesneau, previously served as Director of Certification at SustainCERT, which is mentioned in chapter 7.</p>
+  </div>
+  <label for="rSearch" style="display:block;font-family:var(--display);margin:1.2rem 0 .4rem">Search the 287 sources</label>
+  <input class="search" id="rSearch" type="search" placeholder="Try SBTi, Verra, Ninth Circuit">
+  <ol class="refs" id="refList"></ol>
+</section>
+
+</main>
+</div>
+<footer>
+  <p>Carbon Rulebook Atlas. Research current to 10 November 2026; rules in this field change monthly, so check the linked sources before relying on any figure. Not legal or financial advice.</p>
+</footer>
+
+<script>const REFS=[{"n":1,"t":"DLA Piper. EU Council approves Omnibus I Directive. 31 March 2026","u":"https://knowledge.dlapiper.com/dlapiperknowledge/globalemploymentlatestdevelopments/2026/eu-council-approves-omnibus-i-directive","g":""},{"n":2,"t":"Covington, Global Policy Watch. EU CSDDD/CSRD Omnibus published in Official Journal: transposition, delegated acts and guidelines are next. February 2026","u":"https://www.globalpolicywatch.com/2026/02/eu-csddd-csrd-omnibus-published-in-official-journal-transposition-delegated-acts-and-guidelines-are-next/","g":""},{"n":3,"t":"US Securities and Exchange Commission (Federal Register). Rescission of Climate-Related Disclosure Rules (proposed rule). 3 June 2026","u":"https://www.federalregister.gov/documents/2026/06/03/2026-11091/rescission-of-climate-related-disclosure-rules","g":""},{"n":4,"t":"WilmerHale. Climate disclosure update: CARB's SB 253 initial regulation takes effect. 20 October 2026","u":"https://www.wilmerhale.com/en/insights/blogs/esg-epicenter/20261020-climate-disclosure-update-carbs-sb-253-initial-regulation-takes-effect","g":""},{"n":5,"t":"Science Based Targets initiative. Corporate Net-Zero Standard V2.0: Criteria. June 2026","u":"https://files.sciencebasedtargets.org/production/files/Corporate-Net-Zero-Standard-V2-Criteria.pdf","g":""},{"n":6,"t":"ESG Dive. GHG Protocol, ISO combine carbon accounting standards. 30 July 2026","u":"https://www.esgdive.com/news/ghg-protocol-iso-combine-carbon-accounting-standards/826600/","g":""},{"n":7,"t":"ESG Today (M. Segal). GHG Protocol to push back stricter Scope 2 reporting rules after corporate objections. 26 October 2026","u":"https://www.esgtoday.com/ghg-protocol-to-push-back-stricter-scope-2-reporting-rules-after-corporate-objections/","g":""},{"n":8,"t":"Latham & Watkins. EU Empowering Consumers Directive: new rules on green claims apply from 27 September 2026. 2026","u":"https://www.lw.com/en/insights/eu-empowering-consumers-directive-new-rules-on-green-claims-apply-from-27-september-2026","g":""},{"n":9,"t":"Bertram, A. (Intereconomics 60(3)). Deregulating to No Avail: How the Omnibus Package Falls Short in Simplifying Key EU Green Deal Instruments. 2025","u":"https://www.intereconomics.eu/contents/year/2025/number/3/article/deregulating-to-no-avail-how-the-omnibus-package-falls-short-in-simplifying-key-eu-green-deal-instruments.html","g":""},{"n":10,"t":"GHG Protocol. Scope 2 market-based method update: from 2025–2026 public consultation to current status. 16 October 2026","u":"https://ghgprotocol.org/blog/scope-2-market-based-method-update-2025-2026-public-consultation-current-status","g":""},{"n":11,"t":"GHG Protocol. GHG Protocol releases AMI feedback summary showing broad support for proposed multi-statement structure. 23 September 2026","u":"https://ghgprotocol.org/blog/announcement-ghg-protocol-releases-ami-feedback-summary-showing-broad-support-proposed-multi","g":""},{"n":12,"t":"Sylvera. SBTi CNZ v2 legitimised commodity certificates: what it means for buyers and producers. 11 June 2026","u":"https://www.sylvera.com/blog/sbti-cnz-v2-legitimised-commodity-certificates-what-it-means-for-buyers-and-producers","g":"vendor"},{"n":13,"t":"EY. EU Sustainability Developments, Issue 14. July 2026","u":"https://www.ey.com/content/dam/ey-unified-site/ey-com/en-gl/technical/csrd-technical-resources/documents/ey-gl-eu-sustainability-developments-v2-07-2026.pdf","g":""},{"n":14,"t":"IFRS Foundation. ISSB issues targeted amendments to IFRS S2. 11 December 2025","u":"https://www.ifrs.org/news-and-events/news/2025/12/issb-issues-targeted-amendments-ifrs-s2/","g":""},{"n":15,"t":"EFRAG (Prometeia/Syntesia). Cost-Benefit Analysis on Draft Amended ESRS. December 2025","u":"https://www.efrag.org/sites/default/files/media/document/2025-12/Cost-benefit%20Analysis%20on%20Draft%20Amended%20ESRS.pdf","g":""},{"n":16,"t":"Verdantix. ESG reporting software spend set to quadruple by 2029, with market predicted to grow to $5.6 billion. 11 December 2024","u":"https://www.verdantix.com/insights/press-release/esg-reporting-software-spend-set-to-quadruple-by-2029-with-market-predicted-to-grow-to-5.6-billion-dollars","g":"industry analyst"},{"n":17,"t":"Verdantix. The ESG and sustainability consulting market will quadruple and reach $48 billion by 2028. 6 November 2023","u":"https://www.verdantix.com/insights/blog/the-esg-and-sustainability-consulting-market-will-quadruple-and-reach-48-billion-dollars-by-2028","g":"industry analyst"},{"n":18,"t":"S&P Global Commodity Insights. Verra's revised fees for carbon credits squeeze profits for traders, developers. 19 March 2025","u":"https://www.spglobal.com/energy/en/news-research/latest-news/energy-transition/031925-verras-revised-fees-for-carbon-credits-squeezes-profits-for-traders-developers","g":""},{"n":19,"t":"EU Perspectives. Behind Omnibus I: the American pressure campaign. 30 March 2026","u":"https://euperspectives.eu/2026/03/behind-omnibus-i-the-american-pressure-campaign/","g":""},{"n":20,"t":"InfluenceMap. Corporate engagement on the GHG Protocol Scope 2 consultation. 28 August 2026","u":"https://influencemap.org/insight/Corporate-Engagement-on-the-GHG-Protocol-Scope-2-Consultation-39494","g":"advocacy-research"},{"n":21,"t":"Bisnow. Data center climate emissions special report: Google, Amazon, Meta, Microsoft. 12 August 2026","u":"https://www.bisnow.com/news/national/data-center-sustainability-operations/data-center-climate-emissions-special-report-google-amazon-meta-microsoft","g":""},{"n":22,"t":"National Law Review. California climate disclosure laws: Ninth Circuit ruling on SB 253 Scope 1-2 (Chamber of Commerce v. Sanchez). c. 9 November 2026","u":"https://natlawreview.com/article/california-climate-disclosure-laws-ninth-circuit-ruling-sb-253-scope-1-2","g":"secondary; UNVERIFIED against opinion"},{"n":23,"t":"Finance Watch. European Parliament votes to gut EU sustainability rules. 13 November 2025","u":"https://www.finance-watch.org/press/european-parliament-votes-to-gut-eu-sustainability-rules/","g":"advocacy"},{"n":24,"t":"ICAP. EU CBAM enters compliance phase and outlines path ahead. 19 January 2026","u":"https://icapcarbonaction.com/en/news/eu-cbam-enters-compliance-phase-and-outlines-path-ahead","g":""},{"n":25,"t":"ICAP. EU officially adopts 2040 climate target, postpones ETS 2 by one year. updated 10 March 2026","u":"https://icapcarbonaction.com/en/news/eu-officially-adopts-2040-climate-target-postpones-ets-2-one-year","g":""},{"n":26,"t":"Coolset. EUDR delay explained (tracker). updated 24 September 2026","u":"https://www.coolset.com/academy/eudr-delay-2025-explained","g":"vendor"},{"n":27,"t":"European Commission. Report on the CBAM transitional period, COM(2025) 783. 16 December 2025","u":"https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025DC0783&qid=1767168823871","g":""},{"n":28,"t":"Regreener. The EU Green Claims Directive: a short summary. updated 6 October 2026","u":"https://www.regreener.earth/blog/the-eu-green-claims-directive:-a-short-summary","g":"vendor"},{"n":29,"t":"Legal500. States continue to expand GHG reporting as EPA delays federal requirements again. October 2026","u":"https://www.legal500.com/intelligence/united-states/environment/states-continue-to-expand-ghg-reporting-as-epa-delays-federal-requirements-again","g":""},{"n":30,"t":"ESG Dive. BlackRock, Vanguard, State Street motion to dismiss coal antitrust case denied. 11 August 2025","u":"https://www.esgdive.com/news/blackrock-vanguard-state-street-motion-to-dismiss-coal-antitrust-case-denied-texas-ag/757336/","g":""},{"n":31,"t":"S&P Global Sustainable1. ISSB adoption tracker, Q3 2026. 2026","u":"https://www.spglobal.com/sustainable1/en/insights/research-reports/issb-q3-2026","g":""},{"n":32,"t":"ESG Today. Singapore delays climate reporting requirements to give smaller companies more time to prepare. August 2025","u":"https://www.esgtoday.com/singapore-delays-climate-reporting-requirements-to-give-smaller-companies-more-time-to-prepare/","g":""},{"n":33,"t":"Business at OECD (BIAC). The Risks of Divergence Between Global ESG Reporting Standards. July 2025","u":"https://www.businessatoecd.org/hubfs/The%20Risks%20of%20Divergence%20Between%20Global%20ESG%20Reporting%20Standards.pdf","g":"business association"},{"n":34,"t":"GHG Protocol. Consolidated Standard Development Plan (SDP) v2.0. 29 July 2026","u":"https://ghgprotocol.org/sites/default/files/2026-07/Consolidated-StandardDevelopmentPlan(SDP)-2026.07.29.pdf","g":""},{"n":35,"t":"Sustainserv. Three new GRI topical standards for climate and nature: what the updates mean for reporters. 9 April 2026","u":"https://sustainserv.com/insights/three-new-gri-topical-standards-for-climate-and-nature-what-the-updates-mean-for-reporters/","g":"consultancy"},{"n":36,"t":"Greenly. Our guide to the Carbon Disclosure Project (CDP). November 2026","u":"https://greenly.earth/en-us/blog/company-guide/our-guide-to-the-carbon-disclosure-project-cdp","g":"vendor"},{"n":37,"t":"Senken. SBTi Net-Zero Standard V2: what changes for corporate carbon credit strategy. 2026","u":"https://www.senken.io/blog/sbti-net-zero-standard-v2-what-changes-for-corporate-carbon-credit-strategy-2026","g":"vendor (credit marketplace)"},{"n":38,"t":"Trellis. After net-zero commitments expired, companies moved ahead without SBTi. 9 July 2025","u":"https://trellis.net/article/after-net-zero-commitments-expired-companies-moved-ahead-without-sbti/","g":""},{"n":39,"t":"Atlas Magazine. NZIA replaced by the Forum for Insurance Transition to Net Zero. 2024","u":"https://www.atlas-mag.net/en/articles/nzia-replaced-forum-insurance-transition-net-zero-0","g":""},{"n":40,"t":"ESG Today. Net-Zero Banking Alliance ceases operations. 3 October 2025","u":"https://www.esgtoday.com/net-zero-banking-alliance-ceases-operations/","g":""},{"n":41,"t":"ESG Today. Net Zero Asset Managers initiative relaunches. 25 February 2026","u":"https://www.esgtoday.com/net-zero-asset-managers-initiative-relaunches/","g":""},{"n":42,"t":"ESG Dive. Vanguard settles antitrust coal case with Texas, red states; State Street, BlackRock fight on. 2 March 2026","u":"https://www.esgdive.com/news/vanguard-settles-antitrust-coal-case-texast-red-states-state-street-blackrock/813513/","g":""},{"n":43,"t":"Green Fuel Journal. CORSIA eligible emissions units 2026–2028. 9 October 2026","u":"https://www.greenfueljournal.com/post/corsia-eligible-emissions-units-2026-2028","g":"secondary compilation"},{"n":44,"t":"Ecosystem Marketplace (Forest Trends). SOVCM 2025 finds the voluntary carbon market in transition. 29 May 2025","u":"https://www.ecosystemmarketplace.com/articles/sovcm-2025-finds-the-voluntary-carbon-market-in-transition-demand-holding-steady-as-turnover-stabilizes/","g":""},{"n":45,"t":"MSCI. Carbon credits come of age in 2025. 6 January 2026","u":"https://www.msci.com/research-and-insights/blog-post/carbon-credits-come-of-age-in-2025","g":"data vendor"},{"n":46,"t":"World Bank. Direct carbon pricing covers nearly one-third of global emissions (State and Trends of Carbon Pricing 2026). 19 May 2026","u":"https://www.worldbank.org/en/news/press-release/2026/05/19/direct-carbon-pricing-covers-nearly-one-third-of-global-emissions","g":""},{"n":47,"t":"Calyx Global. ICVCM CCP label tracker. updated 13 May 2026","u":"https://calyxglobal.com/research-hub/commentary/icvcm-ccp-label-tracker","g":"vendor (ratings)"},{"n":48,"t":"Fastmarkets. UN Article 6 body approves cookstove methodologies as reversal rules weigh on supply prospects. 13 October 2026","u":"https://www.fastmarkets.com/insights/un-article-6-body-approves-cookstove-methodologies-as-reversal-rules-weigh-on-supply-prospect/","g":""},{"n":49,"t":"Veyt. GO prices jump amid policy uncertainty. 25 February 2026","u":"https://veyt.com/eac/prices-jump-amidst-policy-uncertainty/","g":"data vendor; partly paywalled"},{"n":50,"t":"Argus Media. Market eyes grid balance as Europe tests granular GOOs. 9 July 2025","u":"https://www.argusmedia.com/en/news-and-insights/latest-market-news/2708318-market-eyes-grid-balance-as-europe-tests-granular-goos","g":""},{"n":51,"t":"Center for Green Market Activation. GMA newsletter, Fall 2026 (post-Climate Week edition). October 2026","u":"https://gmacenter.org/news/gma-newsletter-fall-2026-post-climate-week-edition/","g":"market builder"},{"n":52,"t":"Roundtable on Sustainable Biomaterials. SAF book and claim GHG accounting guidance. 16 June 2026","u":"https://rsb.org/2026/06/16/saf-book-and-claim-ghg-accounting-guidance/","g":"registry operator"},{"n":53,"t":"Regreener. SAF certificate prices 2026. 2026","u":"https://www.regreener.earth/blog/saf-certificate-prices","g":"reseller"},{"n":54,"t":"European Parliamentary Research Service. Carbon removals and carbon farming certification: delegated acts (briefing). 2026","u":"https://www.europarl.europa.eu/RegData/etudes/BRIE/2026/785709/EPRS_BRI(2026)785709_EN.pdf","g":""},{"n":55,"t":"Verra. Verra to open Nature Framework certification process widely. 20 November 2025","u":"https://verra.org/verra-to-open-nature-framework-certification-process-widely/","g":"standard-setter"},{"n":56,"t":"B4B+ Club / CDC Biodiversité. Biodiversity Credits: Ensuring Standard Integrity (insight report). January 2026","u":"https://www.cdc-biodiversite.fr/wp-content/uploads/2026/02/B4B-CREDITS-MD.pdf","g":""},{"n":57,"t":"Bloom Labs. Monthly market overview, May 2026. 2026","u":"https://newsletter.bloomlabs.earth/p/monthly-market-overview-may-2026","g":"market-data vendor"},{"n":58,"t":"Holmlund et al. (Ecosystem Services 78:101828). Biodiversity credits review. online 17 February 2026","u":"https://www.sciencedirect.com/science/article/pii/S2212041626000161","g":"peer-reviewed"},{"n":59,"t":"Deloitte. Heads Up: FASB guidance on environmental credit programs (ASU 2026-02). 19 May 2026","u":"https://dart.deloitte.com/USDART/home/publications/deloitte/heads-up/2026/fasb-guidance-environmental-credit-programs","g":""},{"n":60,"t":"UNIDROIT. Draft Principles on the Legal Nature of Verified Carbon Credits (consultation draft). July 2026","u":"https://www.unidroit.org/wp-content/uploads/2026/07/Study-LXXXVI-Draft-Principles-on-the-Legal-Nature-of-VCCs-for-Consultation.pdf","g":""},{"n":61,"t":"GreenSeal.dev. How AI quietly rewrote Big Tech's climate promises. 12 October 2026","u":"https://www.greenseal.dev/blog/2026-10-12-big-tech-climate-claims-ai/","g":"blog; facts traced to company reports"},{"n":62,"t":"American Bar Association, Trends. Texas SB13 and the future of state anti-ESG laws. May–June 2026","u":"https://www.americanbar.org/groups/environment_energy_resources/resources/trends/2026-may-june/texas-sb13-future-of-state-anti-esg-laws/","g":""},{"n":63,"t":"US EPA (Federal Register). Rescission of the Greenhouse Gas Endangerment Finding and Motor Vehicle Greenhouse Gas Emission Standards. 18 February 2026","u":"https://www.federalregister.gov/documents/2026/02/18/2026-03157/rescission-of-the-greenhouse-gas-endangerment-finding-and-motor-vehicle-greenhouse-gas-emission","g":""},{"n":64,"t":"Kirkland & Ellis. US Environmental Protection Agency issues final rule rescinding the GHG endangerment finding. 9 March 2026","u":"https://www.kirkland.com/publications/kirkland-alert/2026/03/us-environmental-protection-agency-issues-final-rule","g":""},{"n":65,"t":"ClearBlue Markets. First Article 6.4 credits issued under the Paris Agreement. 3 March 2026","u":"https://www.clearbluemarkets.com/knowledge-base/first-article-6.4-credits-issued-under-the-paris-agreement","g":"vendor"},{"n":66,"t":"PwC Viewpoint. In brief INT2026-08: GHG Protocol requests information on actions and market instruments. 14 April 2026","u":"https://viewpoint.pwc.com/gx/en/pwc/in-briefs/2026/ib_int202608.html","g":""},{"n":67,"t":"GHG Protocol. Scope 3 Standard Revisions: Phase 1 Progress Update. 31 March 2026","u":"https://ghgprotocol.org/sites/default/files/2026-03/S3-Phase1ProgressUpdate-20260331.pdf","g":""},{"n":68,"t":"TechCrunch. Microsoft's carbon removal plans aren't dead after all. 20 May 2026","u":"https://techcrunch.com/2026/05/20/microsofts-carbon-removal-plans-arent-dead-after-all/","g":""},{"n":69,"t":"US Securities and Exchange Commission. Press release 2026-49: SEC proposes rescission of climate-related disclosure rules. 29 May 2026","u":"https://www.sec.gov/newsroom/press-releases/2026-49-sec-proposes-rescission-climate-related-disclosure-rules","g":""},{"n":70,"t":"Mintz. Eighth Circuit orders SEC to either defend climate disclosure rules or reconsider them (page dated 13 Sep 2025; URL dated 16 Mar 2026). 2025/2026 (date inconsistent)","u":"https://www.mintz.com/insights-center/viewpoints/2026-03-16-eighth-circuit-orders-sec-either-defend-climate-disclosure","g":""},{"n":71,"t":"ESG Today. SBTi releases finalized new Corporate Net-Zero Standard. June 2026","u":"https://www.esgtoday.com/sbti-releases-finalized-new-corporate-net-zero-standard/","g":""},{"n":72,"t":"GHG Protocol. Scope 2 Public Consultation Summary of Feedback: Executive Summary. 29 July 2026","u":"https://ghgprotocol.org/sites/default/files/2026-07/S2-ExecutiveSummary-PublicConsultation%20ummaryofFeedback-2026.07.29.pdf","g":""},{"n":73,"t":"ESG Today. Verra launches Scope 3 Standard Program to verify value chain climate projects. 17 September 2026","u":"https://www.esgtoday.com/verra-launches-scope-3-standard-program-to-verify-value-chain-climate-projects/","g":""},{"n":74,"t":"PPC Land (reporting ACCC guidance). ACCC says ads can't present bought carbon credits as emission cuts. 20 October 2026","u":"https://ppc.land/accc-says-ads-cant-present-bought-carbon-credits-as-emission-cuts/","g":"secondary"},{"n":75,"t":"IFRS Foundation. ISSB consults on proposals for nature-related disclosures. October 2026","u":"https://www.ifrs.org/news-and-events/news/2026/10/issb-consults-on-proposals-nature-related-disclosures/","g":""},{"n":76,"t":"Integrity Council for the Voluntary Carbon Market. The Integrity Council approves methodologies for coal transition and forest restoration. 3 November 2026","u":"https://icvcm.org/the-integrity-council-approves-methodologies-for-coal-transition-and-forest-restoration","g":""},{"n":77,"t":"Carbon Market Watch. ICVCM's green light for coal crediting is a red flag for the planet (title and date only; not retrieved). 6 November 2026","u":"https://carbonmarketwatch.org/2026/11/06/icvcms-green-light-for-coal-crediting-is-a-red-flag-for-the-planet/","g":"advocacy; not retrieved"},{"n":78,"t":"Latham & Watkins. EU Sustainability Omnibus published in the Official Journal. 2026","u":"https://www.lw.com/en/insights/eu-sustainability-omnibus-published-in-the-official-journal","g":""},{"n":79,"t":"Ecoprism. ESRS simplification 2026. 2026","u":"https://ecoprism.com/resources/insights/esrs-simplification-2026","g":"vendor"},{"n":80,"t":"Norton Rose Fulbright. European Parliament votes to adopt Omnibus proposal amending CSRD and CS3D. November 2025","u":"https://www.nortonrosefulbright.com/en/knowledge/publications/1679488b/european-parliament-votes-to-adopt-omnibus-proposal-amending-csrd-and-cs3d","g":""},{"n":81,"t":"Ethical Trading Initiative. European Parliament votes in favour of Omnibus I. 18 December 2025","u":"https://www.ethicaltrade.org/resources/blog/european-parliament-votes-favour-omnibus-i","g":"advocacy"},{"n":82,"t":"Herbert Smith Freehills Kramer. Omnibus update: EU Taxonomy Delegated Act enters into force. 2026","u":"https://www.hsfkramer.com/notes/esg/2026-posts/omnibus-update-eu-taxonomy-delegated-act-enters-into-force","g":""},{"n":83,"t":"Bindler. Scope 2 location-based vs market-based under ESRS E1-6. checked 28 September 2026","u":"https://bindler.co/guides/scope-2-location-based-vs-market-based-esrs-e1-6/","g":"vendor; secondary"},{"n":84,"t":"Clarity AI. SFDR 2.0 in trilogue: where the negotiations stand and when the rules will apply. 18 August 2026","u":"https://clarity.ai/research-and-insights/regulatory-compliance/sfdr-2-0-in-trilogue-where-the-negotiations-stand-and-when-the-rules-will-apply/","g":"vendor"},{"n":85,"t":"ESMA. TRV Risk Analysis: Impact of the ESMA Guidelines on the use of ESG or sustainability-related terms in fund names. 17 December 2025","u":"https://www.esma.europa.eu/sites/default/files/2025-12/ESMA50-801628861-4423_TRV_Risk_Analysis_Impact_of_the_ESMA_Guidelines_on_the_use_of_ESG_or_sustainability-related_terms_in_fund_names.pdf","g":""},{"n":86,"t":"ESG Today (on osapiens/CBS survey). 90% of companies no longer in CSRD scope plan to maintain or expand sustainability reporting. March 2026","u":"https://www.esgtoday.com/90-of-companies-no-longer-in-csrd-scope-plan-to-maintain-expand-sustainability-reporting-survey/","g":"vendor survey"},{"n":87,"t":"Slaughter and May. EU CBAM amended to exclude 90% of importers but include 99% of emissions. 23 October 2025","u":"https://sustainability.slaughterandmay.com/post/102lr0h/eu-cbam-amended-to-exclude-90-of-importers-but-include-99-of-emissions","g":""},{"n":88,"t":"Carbon Constraints. CBAM, ETS1 and ETS2: autumn 2026 update. Autumn 2026","u":"https://www.carbonconstraints.com/blog/cbam-ets1-ets2-autumn-2026-update","g":"vendor"},{"n":89,"t":"GreenCalculus. UK CBAM guide. 2026","u":"https://greencalculus.com/standards/uk-cbam/","g":"vendor; secondary"},{"n":90,"t":"EU Perspectives. Member states demand reform of ETS2. 25 June 2025","u":"https://euperspectives.eu/2025/06/member-states-demand-reform-ets2/","g":""},{"n":91,"t":"FoodNavigator. EUDR: will it be simplified further?. 5 October 2026","u":"https://www.foodnavigator.com/Article/2026/10/05/eudr-will-it-be-simplified-further/","g":""},{"n":92,"t":"SDG News. Green Claims Directive withdrawn by EU Commission in 2027 work programme. 5 November 2026","u":"https://sdgnews.com/green-claims-directive-withdrawn-eu-commission-2027/","g":"secondary"},{"n":93,"t":"African Arguments. 'Continuously opposed': Global South vexed by unsaid COP29 unilateral trade measures. December 2024","u":"https://africanarguments.org/2024/12/continuously-opposed-global-south-vexed-unsaid-cop29-unilateral-trade-measures/","g":""},{"n":94,"t":"Torys. CSA climate disclosure rule on hold. April 2025","u":"https://www.torys.com/our-latest-thinking/publications/2025/04/csa-climate-disclosure-rule-on-hold","g":""},{"n":95,"t":"Columbia Law School, Sabin Center for Climate Change Law. Climate Disclosure in Retreat. 1 June 2026","u":"https://blogs.law.columbia.edu/climatechange/2026/06/01/climate-disclosure-in-retreat/","g":""},{"n":96,"t":"Mayer Brown. California climate disclosure laws: CARB finalizes its initial rulemaking, resets the 2026 deadline and previews the 2027 framework. August 2026","u":"https://www.mayerbrown.com/en/insights/publications/2026/08/california-climate-disclosure-laws-carb-finalizes-its-initial-rulemaking-resets-the-2026-deadline-and-previews-the-2027-framework","g":""},{"n":97,"t":"Baker Tilly. California climate disclosure regulations: SB 253 and SB 261. updated 2 July 2026","u":"https://www.bakertilly.com/insights/california-climate-disclosure-regulations-sb-253-and-sb-261","g":""},{"n":98,"t":"Morrison Foerster. Ninth Circuit enjoins enforcement of California climate disclosure law SB 261. 20 November 2025","u":"https://www.mofo.com/resources/insights/251120-ninth-circuit-enjoins-enforcement-of-california-climate-disclosure-law-sb-261","g":""},{"n":99,"t":"US Court of Appeals for the Ninth Circuit (via Justia). Chamber of Commerce v. Sanchez, No. 25-5327 (not retrieved). 9 November 2026","u":"https://law.justia.com/cases/federal/appellate-courts/ca9/25-5327/25-5327-2026-11-09.html","g":"not retrieved"},{"n":100,"t":"Ballotpedia News. Special session recap: 2026 state ESG legislation. 12 August 2026","u":"https://news.ballotpedia.org/2026/08/12/special-session-recap-2026-state-esg-legislation/","g":""},{"n":101,"t":"Harvard Law School Environmental & Energy Law Program. Paris Climate Agreement tracker. accessed November 2026","u":"https://eelp.law.harvard.edu/tracker/paris-climate-agreement","g":""},{"n":102,"t":"Net Zero Tracker (Energy & Climate Intelligence Unit, NewClimate Institute, Oxford Net Zero, Data-Driven EnviroLab). Net Zero Stocktake 2026. 6 November 2026","u":"https://ca1-nzt.edcdn.com/PDFs-and-Excels/Net_Zero_Stocktake_2026.pdf?v=1793874786","g":""},{"n":103,"t":"OneStop ESG. ISSB adoption tracker, August 2026. 28 August 2026","u":"https://onestopesg.com/esg-news/issb-adoption-tracker-august-2026","g":"secondary"},{"n":104,"t":"OnePointFive. Climate regulations on the horizon, part 3 (Asia-Pacific). 2026","u":"https://www.opf.degree/insights/climate-regulations-on-the-horizon-part-3","g":"vendor"},{"n":105,"t":"CMS. UK Government publishes final Sustainability Reporting Standards. February 2026","u":"https://cms.law/en/gbr/legal-updates/uk-government-publishes-final-sustainability-reporting-standards","g":""},{"n":106,"t":"China Briefing (Dezan Shira). China ESG compliance: year in review and 2026 outlook. 2026","u":"https://www.china-briefing.com/news/china-esg-compliance-year-in-review-and-2026-outlook/","g":""},{"n":107,"t":"Allens. Mandatory climate-related financial reporting: lessons from the first wave and reform on the horizon. 10 June 2026","u":"https://www.allens.com.au/insights-news/insights/2026/06/mandatory-climate-related-financial-reporting-lessons-from-the-first-wave-and-reform-on-the-horizon/","g":""},{"n":108,"t":"Business & Human Rights Resource Centre (summarising SOMO). EU: Leaked documents reveal coalition of multinational enterprises lobbying against CSDDD. 3 December 2025","u":"https://www.business-humanrights.org/en/latest-news/eu-leaked-documents-somo-coalition-multinational-enterprises-lobby-csddd/","g":"advocacy"},{"n":109,"t":"Corporate Europe Observatory. From lobbying to law: how business shapes EU deregulation. 1 April 2026","u":"https://corporateeurope.org/en/2026/04/lobbying-law-how-business-shapes-eu-deregulation","g":"advocacy"},{"n":110,"t":"Social LobbyMap (InfluenceMap). The lobbying effect: how corporate influence shaped the EU's sustainability Omnibus proposal. 2 October 2025","u":"https://sociallobbymap.org/the-lobbying-effect-how-corporate-influence-shaped-the-eus-sustainability-omnibus-proposal/","g":"advocacy-research"},{"n":111,"t":"Business & Human Rights Resource Centre. Over 160 investors with EUR 6.6 trillion in assets warn Omnibus package could harm investment and create legal uncertainty. February 2025","u":"https://www.business-humanrights.org/en/latest-news/europe-over-160-investors-with-eur-66-trillion-assets-warn-omnibus-package-could-harm-investment-create-legal-uncertainty/","g":""},{"n":112,"t":"GHG Protocol. Scope 2 standard advances: ISB approves consultation on market- and location-based revisions. 1 August 2025","u":"https://ghgprotocol.org/blog/scope-2-standard-advances-isb-approves-consultation-market-and-location-based-revisions","g":""},{"n":113,"t":"PwC Viewpoint. In brief INT2026-01: GHG Protocol Land Sector and Removals Standard. 3 February 2026","u":"https://viewpoint.pwc.com/us/en/pwc/in-briefs/2026/ib_int202601.html","g":""},{"n":114,"t":"GHG Protocol. Land Sector and Removals Standard v1.1. June 2026","u":"https://ghgprotocol.org/sites/default/files/2026-06/Land-Sector-and-Removals-Standard-v1.1.pdf","g":""},{"n":115,"t":"Climate & Capital Media (GreenBiz). Microsoft, P&G, Unilever and Walmart among 239 companies to miss net-zero deadline. 20 March 2024","u":"https://www.climateandcapitalmedia.com/microsoft-pg-unilever-and-walmart-among-239-companies-to-miss-net-zero-deadline/","g":""},{"n":116,"t":"ESG Dive. SBTi walks back carbon offset Scope 3 policy changes after staff backlash. 16 April 2024","u":"https://www.esgdive.com/news/sbti-walks-back-carbon-offset-scope-3policy-changes-after-staff-backlash/713343/","g":""},{"n":117,"t":"Wikipedia. Science Based Targets initiative. accessed November 2026","u":"https://en.wikipedia.org/wiki/Science_Based_Targets_initiative","g":"tertiary"},{"n":118,"t":"CDP. Framework alignment. accessed November 2026","u":"https://www.cdp.net/en/about/framework-alignment","g":""},{"n":119,"t":"IFRS Foundation. ISSB and TCFD. accessed November 2026","u":"https://www.ifrs.org/sustainability/tcfd/","g":""},{"n":120,"t":"TNFD. ISSB decision on nature-related standard-setting drawing on TNFD framework. 7 November 2025","u":"https://tnfd.global/issb-decision-on-nature-related-standard-setting-drawing-on-tnfd-framework/","g":""},{"n":121,"t":"Wikipedia. BSI PAS 2060. accessed November 2026","u":"https://en.wikipedia.org/wiki/BSI_PAS_2060","g":"tertiary"},{"n":122,"t":"PACT / Carbon Transparency (WBCSD). Navigating the carbon accounting landscape. 25 November 2025","u":"https://www.carbon-transparency.org/insights/navigating-the-carbon-accounting-landscape","g":""},{"n":123,"t":"Trellis. Greenhouse Gas Protocol Land Sector and Removals Standard. 4 February 2026","u":"https://trellis.net/article/greenhouse-gas-protocol-land-sector-removals-standard/","g":""},{"n":124,"t":"Science Based Targets initiative. Corporate Net-Zero Standard V2.0: Main Changes Document. June 2026","u":"https://files.sciencebasedtargets.org/production/files/Corporate-Net-Zero-Standard-V2-Main-Changes-Document.pdf","g":""},{"n":125,"t":"MIT Sloan Sustainability Initiative. Aggregate Confusion Project. accessed November 2026","u":"https://mitsloan.mit.edu/sustainability-initiative/aggregate-confusion-project","g":""},{"n":126,"t":"Berg, F., Kölbel, J. F. & Rigobon, R.. Aggregate Confusion: The Divergence of ESG Ratings, Review of Finance 26(6):1315–1344. November 2022","u":"https://academic.oup.com/rof/article/26/6/1315/6590670","g":"peer-reviewed"},{"n":127,"t":"ESMA. ESG rating providers (Regulation (EU) 2024/3005). 2026","u":"https://www.esma.europa.eu/node/219551","g":""},{"n":128,"t":"Wikipedia. Regulation of ESG rating in the European Union. accessed November 2026","u":"https://en.wikipedia.org/wiki/Regulation_of_ESG_rating_in_the_European_Union","g":"tertiary"},{"n":129,"t":"World Resources Institute. Greenhouse Gas Protocol receives $9.25 million grant from Bezos Earth Fund. 15 March 2023","u":"https://www.wri.org/news/release-greenhouse-gas-protocol-receives-9-25-million-grant-bezos-earth-fund","g":""},{"n":130,"t":"Lupoff, P. (Trellis op-ed). Lessons from the demise of the Net-Zero Banking Alliance. 2025","u":"https://trellis.net/article/lessons-demise-net-zero-banking-alliance/","g":"opinion"},{"n":131,"t":"NYU Stern Center for Business and Human Rights. Vanguard settles on ESG; BlackRock and State Street fight on. 7 April 2026","u":"https://bhr.stern.nyu.edu/quick-take/vanguard-settles-on-esg-blackrock-and-state-street-fight-on/","g":""},{"n":132,"t":"ESG Today. Insurers exit Net-Zero Insurance Alliance as US political pressure builds. May 2023","u":"https://www.esgtoday.com/insurers-exit-net-zero-insurance-alliance-as-u-s-political-pressure-builds/","g":""},{"n":133,"t":"Wikipedia. Glasgow Financial Alliance for Net Zero. accessed November 2026","u":"https://en.wikipedia.org/wiki/GFANZ","g":"tertiary"},{"n":134,"t":"ESG Today. Bloomberg, Carney-led climate finance group restructures after string of high-profile departures from net zero coalitions. 6 January 2025","u":"https://www.esgtoday.com/bloomberg-carney-led-climate-finance-group-restructures-after-string-of-high-profile-departures-from-net-zero-coalitions/","g":""},{"n":135,"t":"Net Zero Investor. Unpicking the fallout of GFANZ's restructuring. 8 January 2025","u":"https://www.netzeroinvestor.net/news-and-views/unpicking-the-fallout-of-gfanzs-restructuring","g":""},{"n":136,"t":"ESG Today. Invesco joins list of investors exiting Climate Action 100+. 6 March 2024","u":"https://www.esgtoday.com/invesco-joins-list-of-investors-exiting-climate-action-100/","g":""},{"n":137,"t":"Climate Action 100+. Progress Update 2025. February 2026","u":"http://www.climateaction100.org/wp-content/uploads/2026/02/CA-100-Progress-Update-2025-PDF-version.pdf","g":""},{"n":138,"t":"ESG Dive. House Judiciary ESG probe: more than 70 investors have left Climate Action 100+. December 2024","u":"https://www.esgdive.com/news/house-judiciary-esg-probe-more-than-70-investors-have-left-climate-action-100/735805/","g":""},{"n":139,"t":"UN Climate Change High-Level Champions. Race to Zero members lead on climate action but policy change still needed. 23 June 2025","u":"https://www.climatechampions.net/media/news/race-to-zero-members-lead-on-climate-action-but-policy-change-still-needed-to-cut-emissions-new-report-findings-show/","g":"self-reported"},{"n":140,"t":"WokeCorp blog (summarising TechCrunch/Recharge reports). Meta renewable energy pledge exit. July 2026","u":"https://wokecorp.com/blog/meta-renewable-energy-pledge-exit/","g":"secondary blog"},{"n":141,"t":"US House Committee on the Judiciary (majority staff). Climate Control: Exposing the Decarbonization Collusion in ESG Investing (interim staff report). 11 June 2024","u":"https://judiciary.house.gov/media/press-releases/new-report-reveals-evidence-esg-collusion-among-left-wing-activists-and-major","g":"partisan"},{"n":142,"t":"Reclaim Finance et al.. Banking on Climate Chaos 2026: global banks financed fossil fuels with $8.7 trillion since the Paris Agreement. 9 June 2026","u":"https://reclaimfinance.org/site/en/2026/06/09/global-banks-financed-fossil-fuels-with-8-7-trillion-since-the-paris-agreement/","g":"advocacy"},{"n":143,"t":"Euronews. BP scraps renewables target, returns to oil and gas in strategy reset. 26 February 2025","u":"https://www.euronews.com/business/2025/02/26/bp-scraps-renewables-target-returns-to-oil-and-gas-in-strategy-reset","g":""},{"n":144,"t":"ESG Dive. Walmart to miss 2025, 2030 GHG emissions reduction targets. 20 December 2024","u":"https://www.esgdive.com/news/walmart-to-miss-2025-2030-ghg-emissions-reduction-targets/736195/","g":""},{"n":145,"t":"Microsoft. 2026 Environmental Sustainability Report. 2026","u":"https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/2026-Microsoft-Environmental-Sustainability-Report-PDF.pdf","g":"company report"},{"n":146,"t":"Trellis. Microsoft 2025 sustainability report: not backing off climate goal. 29 May 2025","u":"https://trellis.net/article/microsoft-2025-sustainability-report-not-backing-off-climate-goal/","g":""},{"n":147,"t":"ESG Today. UN's Race to Zero campaign toughens criteria for company and financial institution net zero plans. 15 June 2022","u":"https://www.esgtoday.com/uns-race-to-zero-campaign-toughens-criteria-for-company-and-financial-institution-net-zero-plans/","g":""},{"n":148,"t":"Law360. BlackRock, State Street get state AG coal suit trimmed. 2 November 2026","u":"https://www.law360.com/articles/2544830/blackrock-state-street-get-state-ag-coal-suit-trimmed","g":"paywalled excerpt"},{"n":149,"t":"Trellis. Net zero stocktake: backtracking among the largest companies. 5 November 2026","u":"https://trellis.net/article/net-zero-stocktake-backtracking/","g":""},{"n":150,"t":"The Conference Board. Climate disclosure and sustainability terminology (press release). 28 April 2025","u":"https://www.conference-board.org/press/climate-disclosure-and-sustainability-terminology","g":""},{"n":151,"t":"The Conference Board (via PR Newswire). 2026 proxy season: human capital, environmental and social proposals decline by over 30%. 11 August 2026","u":"https://www.prnewswire.com/news-releases/2026-proxy-season-human-capital-environmental-and-social-proposals-decline-by-over-30-302847932.html","g":""},{"n":152,"t":"Sidley Austin. SEC proposes to eliminate Rule 14a-8 and modernize the proxy process. 23 September 2026","u":"https://www.sidley.com/en/insights/newsupdates/2026/09/sec-proposes-to-eliminate-rule-14a-8-and-modernize-the-proxy-process","g":""},{"n":153,"t":"Morningstar. ESG funds: 2025 closes with continued outflows amid persistent headwinds. January 2026","u":"https://global.morningstar.com/en-nd/sustainable-investing/esg-funds-2025-closes-with-continued-outflows-amid-persistent-headwinds","g":""},{"n":154,"t":"IREI. Global sustainable funds attract $6.5B in Q3, Morningstar reports. 5 November 2026","u":"https://irei.com/news/global-sustainable-funds-attract-6-5b-in-q3-morningstar-reports/","g":""},{"n":155,"t":"Forest Trends. The voluntary carbon market contracted in 2023. 2024","u":"https://www.forest-trends.org/pressroom/report-the-voluntary-carbon-market-contracted-in-2023-driven-by-drop-off-in-transactions-for-redd-and-renewable-energy/","g":""},{"n":156,"t":"TEI. China carbon market progress report 2026. 22 September 2026","u":"https://tei-energy.org/articles/2026-09-22-china-carbon-market-progress-report-2026","g":""},{"n":157,"t":"Eco-Business. Japan sets 2026 price band for carbon market to steer investment by big polluters. 23 January 2026","u":"https://www.eco-business.com/news/japan-sets-2026-price-band-for-carbon-market-to-steer-investment-by-big-polluters/","g":""},{"n":158,"t":"Probst, B. et al. (Nature Communications 15:9562). Systematic assessment of the achieved emission reductions of carbon crediting projects. 15 November 2024","u":"https://www.nature.com/articles/s41467-024-53645-z","g":"peer-reviewed"},{"n":159,"t":"West, T. et al. (Science). Action needed to make carbon offsets from forest conservation work for climate change mitigation. 25 August 2023","u":"https://www.science.org/doi/10.1126/science.ade3535","g":"peer-reviewed"},{"n":160,"t":"Verra. Technical review of West et al. 2020 and 2023, Guizar-Coutiño 2022, and coverage in the Guardian. 2023","u":"https://verra.org/technical-review-of-west-et-al-2020-and-2023-guizar-coutino-2022-and-coverage-in-britains-guardian/","g":"interested party"},{"n":161,"t":"Gill-Wiehl, A., Kammen, D. & Haya, B. (Nature Sustainability 7:191–202). Pervasive over-crediting from cookstove offset methodologies. January 2024","u":"https://www.nature.com/articles/s41893-023-01259-6","g":"peer-reviewed"},{"n":162,"t":"Calel, R. et al. (LSE Grantham Research Institute). Half of Indian wind farm carbon offsets went to projects that would have been built anyway. 3 November 2021","u":"https://www.lse.ac.uk/granthaminstitute/news/half-of-indian-wind-farm-carbon-offsets-went-to-projects-that-would-have-been-built-anyway-increasing-emissions-new-lse-study","g":"working paper"},{"n":163,"t":"Haya, B. et al. (Frontiers in Forests and Global Change). Comprehensive review of carbon quantification by improved forest management offset protocols. March 2023","u":"https://www.frontiersin.org/articles/10.3389/ffgc.2023.958879/text","g":"peer-reviewed"},{"n":164,"t":"Calyx Global. VM0048 after two years: first credits on the horizon. 14 April 2026","u":"https://calyxglobal.com/research-hub/commentary/vm0048-after-two-years-first-credits-on-the-horizon","g":"vendor (ratings)"},{"n":165,"t":"Climate Home News. Renewable energy carbon credits rejected by high-integrity scheme. 7 August 2024","u":"https://www.climatechangenews.com/2024/08/07/renewable-energy-carbon-credits-rejected-by-high-integrity-scheme/","g":""},{"n":166,"t":"Climate Home News. Zimbabwe forest carbon megaproject generated millions of junk credits. 30 September 2025","u":"https://www.climatechangenews.com/2025/09/30/zimbabwe-forest-carbon-megaproject-generated-millions-of-junk-credits/","g":""},{"n":167,"t":"Climate Home News. Experts quit carbon market watchdog in row over quality label for forest credits. 13 December 2024","u":"https://www.climatechangenews.com/2024/12/13/experts-quit-carbon-market-watchdog-in-row-over-quality-label-for-forest-credits/","g":""},{"n":168,"t":"The Carbon Workbench. Carbon verification costs. 2026","u":"https://thecarbonworkbench.com/learn/carbon-verification-costs","g":"vendor"},{"n":169,"t":"Carbon Market Watch (with AlliedOffsets). Secret intermediaries: are carbon markets really financing climate action?. 2023","u":"https://carbonmarketwatch.org/publications/secret-intermediaries-are-carbon-markets-really-financing-climate-action/","g":"advocacy"},{"n":170,"t":"Sylvera. Q1 2026 Carbon Data Snapshot. 2026","u":"https://www.sylvera.com/blog/q1-2026-carbon-data-snapshot","g":"vendor (ratings)"},{"n":171,"t":"Sylvera. Article 6 authorizations and corresponding adjustments FAQ. 14 November 2025","u":"https://www.sylvera.com/blog/article-6-authorizations-corresponding-adjustments-faq","g":"vendor"},{"n":172,"t":"UNEP Copenhagen Climate Centre. Article 6 Pipeline: global data. updated 5 November 2026","u":"https://article6pipeline.unepccc.org/global-data","g":""},{"n":173,"t":"University of Oxford, Smith School. Article 6 in focus: outcomes of COP29. November 2024","u":"https://www.smithschool.ox.ac.uk/news/article-6-focus-outcomes-cop29","g":""},{"n":174,"t":"ClimeFi. 2025 CDR market review. 2026","u":"https://www.climefi.com/blog-posts/2025-cdr-market-review","g":"vendor (broker)"},{"n":175,"t":"CDR.fyi. Durable CDR demand structure snapshot. April 2026","u":"https://www.cdr.fyi/blog/durable-cdr-demand-structure-snapshot-april-2026","g":""},{"n":176,"t":"Sylvera. Microsoft CDR pause: carbon removal market impact. 15 April 2026","u":"https://www.sylvera.com/blog/microsoft-cdr-pause-reduction-carbon-removal-market-impact","g":"vendor"},{"n":177,"t":"I-TRACK Foundation. Updated market statistics. 14 August 2025","u":"https://www.trackingstandard.org/updated-market-statistics/","g":""},{"n":178,"t":"OneStop ESG (summarising Climate Group RE100 2025 Annual Disclosure Report). RE100 2025 Annual Disclosure Report. 12 October 2026","u":"https://onestopesg.com/esg-resources/re100-2025-annual-disclosure-report","g":"secondary"},{"n":179,"t":"Bjørn, A. et al. (Nature Climate Change), via ScienceDaily. Renewable energy certificates threaten the integrity of corporate science-based targets. 14 June 2022","u":"https://sciencedaily.com/releases/2022/06/220614141550.htm","g":"peer-reviewed (secondary summary)"},{"n":180,"t":"TechInformed (reporting Guardian analysis). Data centre emissions over 660% more than Meta, Microsoft, Google and Apple report. September 2024","u":"https://techinformed.com/data-centre-emissions-over-660-more-than-meta-microsoft-google-and-apple-report/","g":"secondary"},{"n":181,"t":"ESG Today. Vast majority of companies oppose tougher GHG Protocol Scope 2 reporting proposals. 30 July 2026","u":"https://www.esgtoday.com/vast-majority-of-companies-oppose-tougher-ghg-protocol-scope-2-reporting-proposals/","g":""},{"n":182,"t":"CarbonCredits.com. GHG Protocol Scope 2 rules face corporate pushback. 29 October 2026","u":"https://carboncredits.com/ghg-protocol-scope-2-rules-corporate-pushback/","g":"secondary"},{"n":183,"t":"EnergyTag. About Time dashboard. accessed November 2026","u":"https://about-time.energytag.org/","g":"advocacy"},{"n":184,"t":"Cenet Capital. 45V tax credit rules in 2026. 2026","u":"https://www.cenetcapital.com/blog/45v-tax-credit-rules","g":"secondary"},{"n":185,"t":"WSP. The new Corporate Net-Zero Standard V2.0 (briefing). July 2026","u":"https://www.wsp.com/-/media/insights/uk/documents/sbti-version-2-changes-briefing-2026.pdf","g":"consultancy"},{"n":186,"t":"Trellis. SBTi net-zero standard's electricity shift. 15 June 2026","u":"https://trellis.net/article/sbti-net-zero-electricity-shift/","g":""},{"n":187,"t":"BDO Australia. Understanding market-based Scope 2 emissions under AASB S2. 14 October 2025","u":"https://www.bdo.com.au/en-au/insights/esg-sustainability/understanding-market-based-scope-2-emissions-under-aasb-s2","g":""},{"n":188,"t":"Latitude Media. For 24/7 clean energy, Big Tech has two camps. 9 April 2024","u":"https://www.latitudemedia.com/news/for-24-7-clean-energy-big-tech-has-two-camps/","g":""},{"n":189,"t":"NewClimate Institute. Briefing: 24/7 renewable electricity matching is a far more credible approach for the GHG Protocol. October 2024","u":"https://newclimate.org/news/briefing-247-renewable-electricity-matching-is-a-far-more-credible-approach-for-the-ghg","g":"advocacy-research"},{"n":190,"t":"GHG Protocol. Actions and Market Instruments Phase 1 White Paper and RFI: Explanatory Memo. March 2026","u":"https://ghgprotocol.org/sites/default/files/2026-03/AMI-Phase1-WhitePaper-RFI-ExplanatoryMemo.pdf","g":""},{"n":191,"t":"Trellis. GHG Protocol AMI white paper consultation. 29 September 2026","u":"https://trellis.net/article/ghg-protocol-ami-white-paper-consultation/","g":""},{"n":192,"t":"AFS Commodities. SAF book and claim has infrastructure: does it now have accounting credibility?. 21 September 2026","u":"https://www.afscommodities.com/blog/saf-book-and-claim-has-infrastructure-does-it-now-have-accounting-credibility","g":"vendor (trader)"},{"n":193,"t":"Regreener. Reporting SAF certificates in Scope 3. 2026","u":"https://www.regreener.earth/blog/report-saf-certificates-scope-3","g":"reseller"},{"n":194,"t":"IATA / CADO. CORSIA eligible fuel claims on the CADO SAF Registry. 1 September 2026","u":"https://www.iata.org/contentassets/9e084d47f8db4a288b377d49af848d1a/cef-claims-on-cado-saf-registry.pdf","g":"industry registry"},{"n":195,"t":"SAF Planet. The verdict arrives: what SBTi's new standard really means for SAF credits. 2026","u":"https://safplanet.earth/blog/the-verdict-arrives-what-sbtis-new-standard-really-means-for-saf-credits/","g":"vendor"},{"n":196,"t":"NUS Consulting. Biomethane certificates and carbon reporting standards. 16 March 2026","u":"https://www.nusconsulting.com/energy-news/biomethane-certificates-carbon-reporting-standards/","g":"consultancy"},{"n":197,"t":"IATA. SAF production volumes still disappointing. 6 June 2026","u":"https://www.iata.org/en/pressroom/2026-releases/06-06-saf-production-volumes-still-disappointing/","g":"industry association"},{"n":198,"t":"GreenAir News. SAFc Registry milestones. 25 February 2026","u":"https://www.greenairnews.com/?p=8613","g":""},{"n":199,"t":"Zero Emission Maritime Buyers Alliance. ZEMBA announces winners of e-fuel tender. 17 December 2025","u":"https://www.shipzemba.org/zemba-announces-winners-of-highly-anticipated-e-fuel-tender/","g":"market builder"},{"n":200,"t":"Roundtable on Sustainable Biomaterials. RSB leads partnership to develop a book and claim system for low-carbon iron and steel. 8 October 2026","u":"https://rsb.org/2026/10/08/rsb-leads-partnership-to-develop-a-book-claim-system-for-low-carbon-iron-and-steel/","g":"registry operator"},{"n":201,"t":"ResponsibleSteel. Landmark agreements link majority of world's steel production under global and regional standards for low-emission steel. 14 November 2025","u":"https://www.responsiblesteel.org/news/landmark-agreements-link-majority-of-worlds-steel-production-under-global-and-regional-standards-for-low-emission-steel","g":""},{"n":202,"t":"Carbon Brief. Q&A: How countries got the global net-zero shipping deal back on track. 5 May 2026","u":"https://www.carbonbrief.org/qa-how-countries-got-the-global-net-zero-shipping-deal-back-on-track","g":""},{"n":203,"t":"Trellis. SBTi V2 net-zero standard: leaders' feedback. 18 June 2026","u":"https://trellis.net/article/sbti-v2-net-zero-standard-leaders-feedback/","g":""},{"n":204,"t":"NewClimate Institute. Input to the SBTi public consultation on the Corporate Net-Zero Standard V2 (second draft). December 2025","u":"https://newclimate.org/sites/default/files/2025-12/publication-SBTi-public-consultation-input-CNZS-dec2025.pdf","g":"advocacy-research"},{"n":205,"t":"Carbon Market Watch, NewClimate Institute, Greenpeace, BEUC et al.. Open letter on the use of carbon credits to meet Scope 3 GHG targets. 4 April 2024","u":"https://carbonmarketwatch.org/publications/open-letter-on-the-use-of-carbon-credits-to-meet-scope-3-ghg-targets/","g":"advocacy"},{"n":206,"t":"Trellis. PepsiCo environmental attribute certificates. 26 August 2026","u":"https://trellis.net/article/pepsico-environmental-attribute-certificates/","g":""},{"n":207,"t":"Nestlé. The Roots of Net Zero. September 2026","u":"https://www.nestle.com/sites/default/files/2026-09/nestle-roots-net-zero-en.pdf","g":"company report"},{"n":208,"t":"Value Change Initiative. Homepage and Market-Based Instruments Program. page modified 23 September 2026","u":"https://valuechangeinitiative.com/","g":""},{"n":209,"t":"SustainCERT. On the use of environmental attribute certificates for Scope 3. April 2024","u":"https://www.sustain-cert.com/news/on-the-use-of-environmental-attribute-certificates-for-scope-3","g":"verifier; interested party"},{"n":210,"t":"GHG Protocol. Updates on the GHG Protocol Actions and Market Instruments workstream. 17 November 2025","u":"https://ghgprotocol.org/blog/updates-ghg-protocol-actions-and-market-instruments-workstream","g":""},{"n":211,"t":"Abatable. VCMI Scope 3 claim consultation. updated 20 July 2026","u":"https://abatable.com/blog/vcmi-scope-3-claim-consultation","g":"vendor"},{"n":212,"t":"C Level. VCMI Claims Code summary. 2025","u":"https://clevel.co.uk/vcmi-claims-code/","g":"consultancy"},{"n":213,"t":"Ecosystem Marketplace. New global study maps policy for nature credit markets (IAPB/EPIC/Forest Trends). August 2026","u":"https://www.ecosystemmarketplace.com/articles/new-global-study-maps-policy-for-nature-credit-markets-revealing-diverse-approaches-across-six-continents/","g":""},{"n":214,"t":"Bloom Labs. There could be 58 biodiversity credit markets. 7 September 2026","u":"https://newsletter.bloomlabs.earth/p/there-could-be-58-biodiversity-credit","g":"market-data vendor"},{"n":215,"t":"Biodiversity Credit Alliance. Discussion paper on biodiversity credit metrics. February 2026","u":"https://www.biodiversitycreditalliance.org/wp-content/uploads/2026/02/BC-Metrics_20240226_v5.pdf","g":""},{"n":216,"t":"Defra Environment blog. Biodiversity net gain: what's changing and what it means for you. 20 April 2026","u":"https://defraenvironment.blog.gov.uk/2026/04/20/biodiversity-net-gain-whats-changing-and-what-it-means-for-you/","g":""},{"n":217,"t":"PlanningGeek. Environment Act review. November 2026","u":"https://www.planninggeek.co.uk/2026/environment-act-review/","g":"secondary"},{"n":218,"t":"National Audit Office. Risks to the long-term effectiveness of new biodiversity net gain scheme. 17 May 2024","u":"https://www.nao.org.uk/press-releases/risks-to-the-long-term-effectiveness-of-new-biodiversity-net-gain-scheme/","g":""},{"n":219,"t":"Clean Energy Regulator (Australia). Nature Repair Market scheme. accessed November 2026","u":"https://cer.gov.au/schemes/nature-repair-market-scheme","g":""},{"n":220,"t":"Carbon Brief. COP17: key outcomes agreed at the UN biodiversity conference in Yerevan. 31 October 2026","u":"https://www.carbonbrief.org/cop17-key-outcomes-agreed-at-the-un-biodiversity-conference-in-yerevan","g":""},{"n":221,"t":"Fern. NGOs reveal forest destruction caused by EU nature credits pilot. 17 June 2025","u":"https://www.fern.org/publications-insight/ngos-reveal-forest-destruction-caused-by-eu-nature-credits-pilot/","g":"advocacy"},{"n":222,"t":"UNFCCC, Article 6.4 Supervisory Body. A6.4 Glossary v01.0. in force 20 February 2026","u":"https://unfccc.int/sites/default/files/resource/A6.4-Glossary.pdf","g":""},{"n":223,"t":"Green Queen (reporting Break Free From Plastic and GAIA, 'Smoke and Mirrors'). Plastic credits and offsetting programs: Verra, PCX. November 2023","u":"https://www.greenqueen.com.hk/plastic-credits-offsetting-programs-verra-pcx-exchange/","g":"advocacy (underlying report)"},{"n":224,"t":"Biodiversity Credit Alliance. Knowledge Brief: carbon and biodiversity credits from the same land. July 2026","u":"https://www.biodiversitycreditalliance.org/wp-content/uploads/2026/08/BCA_Knowledge-Brief_carbonBD_.pdf","g":""},{"n":225,"t":"ISDA. Accounting for carbon credits: latest developments and emerging challenges. September 2026","u":"https://www.isda.org/a/0G0iE/Accounting-for-Carbon-Credits-Latest-Developments-and-Emerging-Challenges.pdf","g":""},{"n":226,"t":"US Commodity Futures Trading Commission. Press release 9119-25: CFTC withdraws voluntary carbon credit derivatives guidance. 10 September 2025","u":"https://www.cftc.gov/PressRoom/PressReleases/9119-25","g":""},{"n":227,"t":"Senken. Green Claims Directive (EU) academy page. updated 6 October 2026","u":"https://www.senken.io/academy/regulation-and-standards/green-claims-directive-eu","g":"vendor"},{"n":228,"t":"British Retail Consortium. What the CMA's new green claims guidance means for businesses. 25 March 2026","u":"https://brc.org.uk/news-and-events/news/associate-insight/2026/what-the-cma-s-new-green-claims-guidance-mean-for-businesses/","g":""},{"n":229,"t":"Skift. Delta greenwashing lawsuit over carbon credits moves forward. 17 August 2026","u":"https://skift.com/2026/08/17/delta-greenwashing-lawsuit-carbon-credits/","g":""},{"n":230,"t":"Sabin Center, Climate Case Chart. Berrin v. Delta Air Lines, Inc.. updated 2026","u":"https://www.climatecasechart.com/collections/berrin-v-delta-air-lines-inc-_0837b4","g":""},{"n":231,"t":"Bardehle Pagenberg. The 'klimaneutral' decision of the German Federal Court of Justice of 27 June 2024. 2024","u":"https://www.bardehle.com/en/ip-news-knowledge/ip-news/news-detail/the-klimaneutral-decision-of-the-german-federal-court-of-justice-dated-june-27-2024-and-its-impact-on-advertising-with-climate-neutrality","g":""},{"n":232,"t":"GHG Protocol. Land Sector and Removals Guidance v1.0, Chapter 18. 2026","u":"https://ghgprotocol.org/sites/default/files/2026-06/Land-Sector-and-Removals-Guidance-v1.0-Chapter18_0.pdf","g":""},{"n":233,"t":"Sylvera. SBTi CNZ v2 update analysis: what comes next. 11 June 2026","u":"https://www.sylvera.com/blog/sbti-cnz-v2-update-analysis-what-comes-next","g":"vendor"},{"n":234,"t":"Climate Decode. Who rates the carbon rating agencies?. 2026","u":"https://climate-decode.com/insights/vcm-series/vcm-2026-era-of-integrity/who-rates-carbon-rating-agencies","g":"secondary"},{"n":235,"t":"ERM SustainAbility Institute (commissioned by Ceres and Persefoni). Survey reveals costs and benefits of climate-related disclosure for companies and investors. May 2022","u":"https://www.erm.com/about/news/survey-reveals-costs-and-benefits-of-climate-related-disclosure-for-companies-and-investors/","g":"sponsored by interested parties"},{"n":236,"t":"EcoVadis. Homepage (company claims). accessed November 2026","u":"https://ecovadis.com/","g":"vendor"},{"n":237,"t":"Niemann et al. (Sustainability 17(17):8029). Sustainability data requests to Dutch SMEs. 5 September 2025","u":"https://www.mdpi.com/2071-1050/17/17/8029","g":"peer-reviewed"},{"n":238,"t":"IFAC, AICPA and CIMA. The State of Play: sustainability disclosure and assurance (news release). June 2026","u":"https://www.ifac.org/news-events/2026-06/onset-mandatory-sustainability-requirements-begins-impact-global-reporting-study-ifac-aicpa-and-cima","g":""},{"n":239,"t":"ESG News (summarising LinkedIn Global Green Skills Report 2024). Global demand for green talent outpaces supply. 2024","u":"https://esgnews.com/global-demand-for-green-talent-outpaces-supply-linkedin-report/","g":"secondary"},{"n":240,"t":"Sylvera. COP30 carbon markets and Article 6 outcomes. November 2025","u":"https://www.sylvera.com/blog/cop30-carbon-markets-article-6-outcomes","g":"vendor"},{"n":241,"t":"ISS STOXX. More disclosures, less clarity: the Scope 3 data quality challenge. 3 June 2026","u":"https://www.iss-stoxx.com/insights/articles/more-disclosures-less-clarity-the-scope-3-data-quality-challenge/","g":"data vendor"},{"n":242,"t":"Downar, B., Ernstberger, J., Reichelstein, S., Schwenen, S. & Zaklan, A. (Review of Accounting Studies). The impact of carbon disclosure mandates on emissions and financial operating performance. 2021","u":"https://link.springer.com/article/10.1007/s11142-021-09611-x","g":"peer-reviewed"},{"n":243,"t":"Pucker, K. (Harvard Business Review). Overselling Sustainability Reporting. May–June 2021","u":"https://hbr.org/2021/05/overselling-sustainability-reporting","g":"opinion"},{"n":244,"t":"Austin, D. (Preventable Surprises). Greenwish: The Wishful Thinking Undermining the Ambition of Sustainable Business. July 2019","u":"https://preventablesurprises.com/wp-content/uploads/2019/07/2019-07-19-Greenwish-Essay.pdf","g":"opinion"},{"n":245,"t":"Fortune (on T. Fancy, 'The Secret Diary of a Sustainable Investor'). Green Inc.: Tariq Fancy on ESG investing. 25 August 2021","u":"https://fortune.com/2021/08/25/green-inc-tariq-fancy-esg-investing-pointless","g":"opinion"},{"n":246,"t":"Carbon Brief (on UNEP Emissions Gap Report 2025). UNEP: new country climate plans barely move needle on expected warming. 4 November 2025","u":"https://www.carbonbrief.org/unep-new-country-climate-plans-barely-move-needle-on-expected-warming","g":""},{"n":247,"t":"Nguyen, Q., Diaz-Rainey, I. et al. (PLOS Climate). Scope 3 emissions data: quality, divergence across providers and disclosure gaps (PLOS Climate article). 15 November 2023","u":"https://journals.plos.org/climate/article?id=10.1371%2Fjournal.pclm.0000208","g":"peer-reviewed"},{"n":248,"t":"Damodaran, A. (Musings on Markets). Sounding Good or Doing Good? A Skeptical Look at ESG. 21 September 2020","u":"https://aswathdamodaran.blogspot.com/2020/09/sounding-good-or-doing-good-skeptical.html","g":"opinion"},{"n":249,"t":"Edmans, A. (Financial Management 52(1)); interview via IESE. The End of ESG. 2023","u":"https://onlinelibrary.wiley.com/doi/10.1111/fima.12413","g":"opinion (academic)"},{"n":250,"t":"BioEnergy Times. European aviation sector seeks changes to SAF rules amid compliance concerns. 5 May 2026","u":"https://bioenergytimes.com/european-aviation-sector-seeks-changes-to-saf-rules-amid-compliance-concerns/","g":""},{"n":251,"t":"Kelly, A. (Trellis op-ed; author is an ICVCM board member). SBTi should allow a capped share of net-zero targets to be met with carbon credits. 9 November 2026","u":"https://trellis.net/article/sbti-net-zero-carbon-credits","g":"interested party"},{"n":252,"t":"Bloom Labs. Monthly market overview, February 2026. 5 March 2026","u":"https://newsletter.bloomlabs.earth/p/monthly-market-overview-february","g":"market-data vendor"},{"n":253,"t":"Watershed. SBTi Corporate Net-Zero Standard V2. 12 June 2026","u":"https://watershed.com/blog/sbti-cnzs-2","g":"vendor"},{"n":254,"t":"Clean Energy Buyers Association. Impact accounting for corporate energy buyers. 8 June 2026","u":"https://ceba.org/impact-accounting-for-corporate-energy-buyers/","g":"industry association"},{"n":255,"t":"ESG Dive. Microsoft's data center expansion drove 25% emissions spike. July 2026","u":"https://www.esgdive.com/news/microsofts-data-center-expansion-drove-25-emissions-spike-2025-environmental-sustainability-report/825082/","g":"","v":1},{"n":256,"t":"Facilities Dive. Microsoft's data center expansion drove 25% emissions spike (2026 Environmental Sustainability Report). July 2026","u":"https://www.facilitiesdive.com/news/microsofts-data-center-expansion-drove-25-emissions-spike-2025-environmental-sustainability-report/825142/","g":"","v":1},{"n":257,"t":"Energy Live News. Microsoft emissions rise as AI expansion challenges 2030 carbon-negative target. July 2026","u":"https://www.energylivenews.com/?p=362827","g":"","v":1},{"n":258,"t":"Science Based Targets initiative. Corporate Net-Zero Standard V2.0: Criteria. June 2026","u":"https://files.sciencebasedtargets.org/production/files/Corporate-Net-Zero-Standard-V2-Criteria.pdf","g":"","v":1},{"n":259,"t":"Verra. Verra launches Scope 3 Standard Program to catalyze finance for decarbonizing value chains (program notice). 15 September 2026","u":"https://verra.org/program-notice/verra-launches-scope-3-standard-program-to-catalyze-finance-for-decarbonizing-value-chains/","g":"","v":1},{"n":260,"t":"Beveridge & Diamond. Verra Launches Scope 3 Standard Program: What Companies Can Do Now and What Comes Next. September 2026","u":"https://www.bdlaw.com/publications/verra-launches-scope-3-standard-program-what-companies-can-do-now-and-what-comes-next/","g":"","v":1},{"n":261,"t":"Bloomberg. Apple, Amazon Push Back on Stricter Emissions Reporting Rules. 23 April 2026","u":"https://www.bloomberg.com/news/articles/2026-04-23/apple-amazon-push-back-on-stricter-emissions-reporting-rules","g":"","v":1},{"n":262,"t":"CarbonCredits.com. Apple, Amazon Lead 60+ Firms to Ease Global Carbon Reporting Rules. April 2026","u":"https://carboncredits.com/?p=43650","g":"","v":1},{"n":263,"t":"OneStop ESG. 48 Companies With $4.7 Trillion Revenue Warn GHG Protocol Scope 2 Rules Will Slow Energy Transition. April 2026","u":"https://onestopesg.com/esg-news/ghg-protocol-scope-2-pushback","g":"secondary","v":1},{"n":264,"t":"US Court of Appeals for the Ninth Circuit. Chamber of Commerce of the USA v. Sanchez, No. 25-5327 (opinion). 9 November 2026","u":"https://cdn.ca9.uscourts.gov/datastore/opinions/2026/11/09/25-5327.pdf","g":"","v":1},{"n":265,"t":"Justia. Chamber of Commerce v. Sanchez, No. 25-5327 (9th Cir. 2026) (summary). 9 November 2026","u":"https://law.justia.com/cases/federal/appellate-courts/ca9/25-5327/25-5327-2026-11-09.html","g":"","v":1},{"n":266,"t":"Foley & Lardner. California Climate Disclosure Laws – Ninth Circuit Ruling: SB 253 Scope 1 & 2 Disclosures Move Ahead, SB 253 Scope 3 Disclosures and SB 261 Expected to Be Enjoined. November 2026","u":"https://www.foley.com/insights/publications/2026/11/california-climate-disclosure-laws-ninth-circuit-ruling-sb-253-scope-1-2-disclosures-move-ahead-sb-253-scope-3-disclosures-and-sb-261-expected-to-be-enjoined/","g":"","v":1},{"n":267,"t":"Linklaters Sustainable Futures. EU CSRD: revised ESRS and voluntary reporting standard are published in the Official Journal. 21 September 2026","u":"https://sustainablefutures.linklaters.com/post/102o1ou/eu-csrd-revised-esrs-and-voluntary-reporting-standard-are-published-in-the-offic","g":"","v":1},{"n":268,"t":"Dcycle. ESRS delegated act: confirmed timetable (update of 3 November 2026)","u":"https://dcycle.io/blog/esrs-delegated-act-delayed-q4-2026/","g":"","v":1},{"n":269,"t":"Loyens & Loeff. ESG Update: Green Claims Directive set to be withdrawn, but anti-greenwashing rules remain. November 2026","u":"https://www.loyensloeff.com/insights/news--events/news/esg-update-green-claims-directive-set-to-be-withdrawn-but-anti-greenwashing-rules-remain/","g":"","v":1},{"n":270,"t":"ESG Today. EU Commission Scraps Green Claims Directive. 4 November 2026","u":"https://www.esgtoday.com/?p=26702","g":"","v":1},{"n":271,"t":"Beveridge & Diamond. SBTi Corporate Net-Zero Standard 2.0: New Flexibility, New Obligations. 2026","u":"https://www.bdlaw.com/ryan-l-andree/publications/sbti-corporate-net-zero-standard-2-0-new-flexibility-new-obligations/","g":"","v":1},{"n":272,"t":"Rödl & Partner. Science-Based Targets: The New Corporate Net-Zero Standard Version 2.0 Is Here. 25 June 2026","u":"https://www.roedl.com/en/insights/science-based-targets-the-new-corporate-net-zero-standard-version-2-0-is-here-our-action-recommendations/","g":"","v":1},{"n":273,"t":"The Next Web. Meta leaves RE100 clean energy pact after a decade as its gas buildout for AI outpaces renewables. July 2026","u":"https://thenextweb.com/news/meta-leaves-re100-clean-energy-gas-ai-data-centres","g":"","v":1},{"n":274,"t":"Sabin Center Climate Litigation Database. Berrin v. Delta Air Lines Inc. (docket, decision of 28 July 2026)","u":"https://www.climatecasechart.com/collections/berrin-v-delta-air-lines-inc-_0837b4","g":"","v":1},{"n":275,"t":"Aviation A2Z. Delta claimed carbon neutral while owning an oil refinery. 3 August 2026","u":"https://aviationa2z.com/index.php/2026/08/03/delta-claimed-carbon-neutral-while-owning-an-oil-refinery/","g":"","v":1},{"n":276,"t":"ESG Today. GHG Protocol to Push Back Stricter Scope 2 Reporting Rules After Corporate Objections. 26 October 2026","u":"https://www.esgtoday.com/?p=26480","g":"","v":1},{"n":277,"t":"CarbonCredits.com. GHG Protocol Delays Tougher Scope 2 Rules After Corporate Pushback. October 2026","u":"https://carboncredits.com/?p=48934","g":"","v":1},{"n":278,"t":"Deloitte DART. Sustainability Reporting and Due Diligence Omnibus Directive Published in the Official Journal of the European Union. 26 February 2026","u":"https://dart.deloitte.com/USDART/home/news/all-news/2026/feb/eu-journal-sustainability-omnibus","g":"","v":1},{"n":279,"t":"Linklaters Sustainable Futures. EU Omnibus I Directive published in the Official Journal of the EU. 26 February 2026","u":"https://sustainablefutures.linklaters.com/post/102mkjf/eu-omnibus-i-directive-published-in-the-official-journal-of-the-eu","g":"","v":1},{"n":280,"t":"Kelley Drye & Warren (JD Supra). Vanguard Settles 13-State ESG Antitrust Suit. March 2026","u":"https://www.jdsupra.com/legalnews/vanguard-settles-13-state-esg-antitrust-8986153/","g":"","v":1},{"n":281,"t":"ESG Today. Vanguard Pays $29.5 Million to Settle Multi-State Anti-ESG Lawsuit. February 2026","u":"https://www.esgtoday.com/vanguard-pays-29-5-million-to-settle-multi-state-anti-esg-lawsuit/","g":"","v":1},{"n":282,"t":"Verra. Verra secures first ICVCM approval for transition credits from early coal retirement. 3 November 2026","u":"https://verra.org/verra-secures-first-icvcm-approval-for-transition-credits-from-early-coal-retirement/","g":"","v":1},{"n":283,"t":"Willkie Farr & Gallagher. SEC Proposes Rescission of its Climate-Related Disclosure Rules. 4 June 2026","u":"https://complianceconcourse.willkie.com/articles/sec-proposes-rescission-of-its-climate-related-disclosure-rules/","g":"","v":1},{"n":284,"t":"Crowe. ASU 2026-02 Addresses Accounting for Environmental Credits. 29 May 2026","u":"https://www.crowe.com/insights/take-into-account/asu-2026-02-addresses-accounting-for-environmental-credits","g":"","v":1},{"n":285,"t":"Uniqus. FASB's Accounting Standards Update ASU 2026-02. 8 June 2026","u":"https://uniqus.com/fasbs-accounting-standards-update-asu-2026-02/","g":"","v":1},{"n":286,"t":"Bloomberg (via BNN Bloomberg). Resignations at carbon oversight body raise quality questions. 10 December 2024","u":"https://bnnbloomberg.ca/investing/2024/12/10/resignations-at-carbon-oversight-body-raise-quality-questions","g":"","v":1},{"n":287,"t":"Insurance Journal (Reuters). Net-Zero Banking Alliance Folds After Mass Exodus by Members. 3 October 2025","u":"https://amp.insurancejournal.com/news/international/2025/10/03/842370.htm","g":"","v":1}];
+const STATUS={counts:{i:"✓",l:"Counts"},cond:{i:"◎",l:"Allowed with conditions"},sep:{i:"⇉",l:"Reported separately"},out:{i:"✕",l:"Excluded or banned"},open:{i:"?",l:"Unsettled or not covered"}};
+const LEDGERS=["GHG Protocol inventory","SBTi Net-Zero Standard V2","Mandatory disclosure","Consumer-claims law","Accounting and legal status"];
+const INSTR=[
+{k:"eac",n:"Unbundled RECs and GOs",d:"An energy attribute certificate bought separately from the power it describes. European Guarantees of Origin traded at €0.57–0.93/MWh through 2025 and early 2026 [[49,50]].",c:[
+ ["cond","Market-based Scope 2","The 2015 rules (now “Method 2”) may continue until a date not yet set. Companies “should” move to Method 1: hourly, deliverable, incremental [[10,276]]."],
+ ["sep","Separate electricity target","Scope 2 emissions targets use the location-based method. Certificates only count toward a separate low-carbon-electricity target, with a 15-year plant-age limit, activity-pool deliverability and a 12-month window [[5,185]]."],
+ ["cond","Disclosed, not netted","ESRS requires both location- and market-based Scope 2 plus the share of contractual instruments [[83,267]]. IFRS S2 requires location-based figures plus information on instruments [[187]]."],
+ ["open","Not specifically regulated","“100% renewable” wording is not directly targeted in the sources reviewed; the EU ban covers offset-based neutrality claims [[8]]."],
+ ["counts","In ASC 818 scope","FASB’s new Topic 818 covers RECs alongside offsets, allowances and RINs [[59,284]]."]]},
+{k:"ppa",n:"Power purchase agreements",d:"A long-term contract for electricity, physical or virtual, with its certificates attached.",c:[
+ ["counts","Market-based Scope 2","Counts today, and is the natural candidate for Method 1 if matched hourly and deliverable [[10]]."],
+ ["cond","Electricity target","Eligible for the low-carbon-electricity target; contracts signed before the effective date are grandfathered [[5]]."],
+ ["cond","Disclosed, not netted","Same dual reporting as certificates under ESRS; instrument information under IFRS S2 [[83,187]]."],
+ ["open","Not specifically regulated","No claims rule specific to PPAs was found in the research."],
+ ["open","Outside this research","Derivative and lease accounting apply; not covered by the sources reviewed."]]},
+{k:"saf",n:"SAF certificates",d:"Book-and-claim units for sustainable aviation fuel that a corporate buyer can hold while the fuel itself is burned elsewhere. Premiums cluster at $150–500/tCO2e [[53]].",c:[
+ ["sep","Separate statement only","The GHG Protocol’s July 2026 plan says market-based approaches for SAF, biomethane and steel are not allowed in the Corporate or Scope 3 Standard; they may be reported separately [[34]]."],
+ ["sep","“System contribution”","Per vendor summaries, book-and-claim purchases do not reduce Scope 3 and support only a contribution claim; vintage must fall within 12 months [[12,195]]. SBTi’s recognition framework is unpublished [[192]]."],
+ ["open","Largely silent","One secondary source reads ESRS E1 as silent on SAF certificates [[193]]."],
+ ["cond","Registry controls","Double-claiming control rests on registries. CADO checks against only two other registries [[194]]."],
+ ["open","Unsettled","No settled accounting or legal treatment was found."]]},
+{k:"mb",n:"Mass-balance commodity attributes",d:"Chain-of-custody claims for low-carbon steel, chemicals or crops mixed with conventional supply in a shared pool.",c:[
+ ["cond","Land sector only, for now","The Land Sector and Removals Standard allows mass balance; elsewhere it is separate reporting [[123]]."],
+ ["counts","Inside the inventory","Within a pool the company sources from, mass balance “can sit inside the physical inventory”; “carbon bank” models are banned (vendor summary) [[12]]."],
+ ["open","Follows the GHG Protocol","Mandatory regimes reference the GHG Protocol, so treatment follows it (inference)."],
+ ["open","Exposed","Product claims built on mass balance are exposed under the EU consumer rules [[8]]."],
+ ["open","Unsettled","No settled accounting treatment found."]]},
+{k:"bio",n:"Biomethane certificates",d:"Certificates for renewable gas injected into a shared grid.",c:[
+ ["open","Undecided","No decision expected before the consolidated standard in 2028 [[196]]."],
+ ["open","Not guaranteed","SBTi’s FAQ says it cannot guarantee their validity [[196]]."],
+ ["cond","Depends on the regime","Permitted under UK SECR, restricted under the EU ETS, ambiguous under CSRD [[196]]."],
+ ["open","Not covered","No claims rule found."],
+ ["open","Unsettled","No settled treatment found."]]},
+{k:"s3u",n:"Insetting and Scope 3 units",d:"Credits from projects inside a company’s own value chain, such as regenerative farming among its suppliers. Verra launched its Scope 3 Standard Program on 15 September 2026 [[259]].",c:[
+ ["sep","Separate, rules pending","Activity-pool and supply-shed rules are not final; the consolidated draft is due in Q2 2027 [[34]]."],
+ ["cond","Implementation hierarchy","V2 sets an activity-pool hierarchy for implementing targets [[71]]."],
+ ["open","Not addressed","No mandatory regime addresses these units directly."],
+ ["open","Not covered","No claims rule found."],
+ ["open","No units yet","Verra’s version 1 allows only pipeline listing; reportable units arrive with version 2 [[259,260]]."]]},
+{k:"avoid",n:"Avoidance carbon credits",d:"Credits for emissions avoided relative to a baseline: REDD+, cookstoves, renewable energy, coal retirement.",c:[
+ ["sep","Separate disclosure","Credits are reported outside the inventory [[232]]."],
+ ["out","Not in targets","Credits cannot count toward Scope 1–3 targets. Optional “Ongoing Emissions Responsibility” tiers recognise contributions [[5,233]]."],
+ ["cond","Must be disclosed","GRI 102 adds mandatory carbon-credit disclosures from 2027 [[35]]."],
+ ["out","Neutrality claims banned","The EU bans offset-based product neutrality claims from 27 September 2026 [[8]]. Australia’s ACCC says avoided-emissions credits cannot support “neutralised” claims [[74]]."],
+ ["cond","Expensed if voluntary","Under ASC 818, credits held for voluntary retirement are expensed, not assets [[59,284]]. UNIDROIT’s draft treats carbon credits as property [[60]]."]]},
+{k:"rem",n:"Removal credits",d:"Credits for CO2 taken out of the air: forests, soils, biochar, direct air capture. Durable removal is dominated by one buyer [[175]].",c:[
+ ["sep","Separate, monitored","Reported separately; land removals require indefinite reversal monitoring [[123]]."],
+ ["cond","Required from 2035","Category A companies must buy removals from 2035, starting at a small share of ongoing emissions [[233]]."],
+ ["cond","Disclosed","Disclosure requirements apply as for other credits [[35]]."],
+ ["cond","“Counterbalance” possible","The ACCC says verified permanent removals may support a counterbalance claim [[74]]."],
+ ["cond","Certified in the EU","EU CRCF units carry public certification [[54]]; ASC 818 applies [[59]]."]]},
+{k:"a6",n:"Article 6 units",d:"Units traded between countries under the Paris Agreement, with or without a corresponding adjustment.",c:[
+ ["sep","Separate","Reported outside the inventory."],
+ ["cond","Disclose status","Disclose authorisation and corresponding-adjustment status [[37]]."],
+ ["open","Not addressed","No specific corporate rule found."],
+ ["open","Not covered","No specific claims rule found."],
+ ["cond","Depends on type","“Mitigation contribution” units carry no corresponding adjustment by definition [[222]]."]]},
+{k:"nature",n:"Biodiversity credits",d:"Units for habitat restored or protected. Voluntary sales total about $6.8m since 2022 [[57]].",c:[
+ ["open","Not covered","Outside the GHG Protocol."],
+ ["open","Not covered","Outside SBTi’s climate standard."],
+ ["cond","Voluntary guidance","ESRS E4 applies; the ISSB issued nature guidance as a voluntary Practice Statement [[75]]."],
+ ["open","Unclear","Whether EU rules reach “nature positive” claims is unaddressed in the sources reviewed [[227]]."],
+ ["out","Excluded","Outside ASC 818 and outside UNIDROIT’s draft principles [[59,60,285]]."]]},
+{k:"plastic",n:"Plastic credits",d:"Units for plastic collected or recycled. An NGO review found 86% of one registry’s credits came from co-processing or incineration [[223]].",c:[
+ ["open","Not covered","Outside the GHG Protocol."],
+ ["open","Not covered","Outside SBTi."],
+ ["open","Not addressed","No mandatory regime addresses them."],
+ ["open","Generic rules apply","General misleading-claims rules likely apply (inference)."],
+ ["out","Excluded","Excluded from UNIDROIT’s draft principles; no accounting standard [[60]]."]]}
+];
+
+const DOMAINS={eu:"EU",us:"United States",std:"Standards",mkt:"Carbon markets",mbi:"Market instruments",nat:"Nature",fin:"Finance",glob:"Global"};
+const DCOL={eu:"#2D3FC8",us:"#B2302E",std:"#1E2622",mkt:"#8F7A00",mbi:"#2E7D4F",nat:"#2E7D4F",fin:"#8F7A00",glob:"#6B746D"};
+const EVENTS=[
+["3 Feb","nat","EU adopts its first carbon-removal certification method","The first CRCF delegated act covers direct air capture, bioenergy with capture and biochar; it entered into force on 7 May. Öko-Institut judges its integrity below the UN mechanism’s [[54]]."],
+["3 Feb","us","Texas anti-boycott law SB13 struck down","A court held the anti-ESG law unconstitutional; Texas plans to appeal. The anti-ESG layer is legally unstable too [[62]]."],
+["20 Apr","us","EPA endangerment-finding rescission takes effect","Published 18 February; removes the federal anchor for GHG regulation [[63,64]]."],
+["26 Feb","eu","Omnibus I becomes law as Directive (EU) 2026/470","CSRD now covers EU firms with more than 1,000 employees and €450m turnover; CSDDD more than 5,000 and €1.5bn. In force 18 March [[1,2,278]]."],
+["26 Feb","mkt","First UN Article 6.4 credits approved","A transitioned Myanmar cookstove programme, about 40% below its old CDM volume [[65]]."],
+["26 Feb","fin","Vanguard settles the Texas coal antitrust case","$29.5m plus “passivity” commitments, including staying out of climate-focused groups in the US [[42,280]]."],
+["5 Mar","eu","EU 2040 target adopted with room for international credits","−90% by 2040, Article 6 credits up to 5% from 2036; ETS2 moved to 2028 [[25]]."],
+["31 Mar","std","GHG Protocol opens its market-instruments consultation","Proposes a physical inventory plus market-based, impact and non-GHG statements; Scope 3 would require 95% coverage and a new Category 16 [[66,67]]."],
+["13 Apr","mkt","Reports of a Microsoft carbon-removal “pause”","Microsoft denied ending the programme and announced a 650 kt BioCirc purchase in May [[68,255]]."],
+["23 Apr","mbi","Apple, Amazon and dozens more push back on stricter Scope 2 rules","A public statement by 48–60+ companies asked the GHG Protocol to keep the new rules optional [[261,262,263]]."],
+["19 May","glob","FASB issues ASU 2026-02 on environmental credits","Credits bought for voluntary retirement are expensed; habitat and wetland credits are out of scope [[59,284,285]]."],
+["29 May","us","SEC proposes rescinding its climate rule","The 2024 rule never took effect; comments closed 3 August; no final rule found by 10 November [[3,283]]."],
+["Jun","glob","Brazil moves ISSB reporting to comply-or-explain","The first reversal of a mandatory ISSB regime [[31]]."],
+["11 Jun","std","SBTi publishes Corporate Net-Zero Standard V2.0","Effective 1 February 2027; location-based Scope 2 targets; commodity certificates recognised; contribution tiers; removals from 2035 [[5,258]]."],
+["3 Jul","eu","Commission adopts the revised ESRS","Published 21 September as Delegated Regulation (EU) 2026/1563; in force 10 November; mandatory from FY2027 [[13,267]]."],
+["9 Jul","mbi","Microsoft’s emissions up 25% in a year","20.29 Mt in FY2025, about 58% above 2020. Market-based Scope 2 rose from about 258 kt to 2.7 Mt after it stopped buying unbundled certificates [[255,256,257]]."],
+["23 Jul","mbi","Meta leaves RE100","Climate Group said Meta could no longer meet the technical criteria because of investments in new gas power [[273]]."],
+["28 Jul","glob","Delta “carbon neutral” damages claims allowed to proceed","Injunctive relief was refused because Delta dropped the claim in 2022 [[274,275]]."],
+["29 Jul","std","GHG Protocol publishes Scope 2 feedback and a merger with ISO","Only 12% of companies backed hourly matching. One joint standard: draft Q2 2027, final Q4 2028 [[6,72,181]]."],
+["28 Aug","mbi","InfluenceMap maps the Scope 2 lobbying","More than half of 1,072 responses were anonymous [[20]]."],
+["15 Sep","mbi","Verra launches its Scope 3 Standard Program","Version 1 lists projects only; reportable Scope 3 units come with version 2 [[259,260]]."],
+["23 Sep","std","84% back the multi-ledger design","GHG Protocol feedback on market instruments supports separate statements [[11]]."],
+["27 Sep","eu","EU ban on offset-based neutrality claims applies","Directive 2024/825 (ECGT) [[8]]."],
+["12 Oct","us","California’s SB 253 regulation takes effect","Four weeks before the first Scope 1/2 filing deadline [[4]]."],
+["14 Oct","us","EPA moves the GHGRP deadline again","To 10 March 2027, without notice and comment; EDF and EIP sued on 22 October [[29]]."],
+["20 Oct","glob","Australia’s ACCC issues carbon-credit claims guidance","Avoided-emissions credits cannot support “neutralised” claims [[74]]."],
+["22 Oct","std","ISSB issues nature guidance as a Practice Statement","TNFD absorbed without a standard [[75]]."],
+["26 Oct","std","GHG Protocol signals two Scope 2 methods","Method 1 “should”, Method 2 (2015 rules) “may” continue until an undetermined date [[7,10,276]]."],
+["27 Oct","nat","COP17 in Yerevan","Off track on 22 of 23 biodiversity targets; EU launches a coalition for nature credits [[220]]."],
+["3 Nov","mkt","ICVCM labels coal-retirement credits","Verra’s VM0052 gets the Core Carbon Principles label; Carbon Market Watch objects [[76,77,282]]."],
+["4 Nov","eu","Commission lists the Green Claims Directive for withdrawal","Its 2027 work programme intends withdrawal within six months; formally still pending [[269,270]]."],
+["9 Nov","us","Ninth Circuit splits California’s climate laws","SB 253 Scope 1/2 reporting proceeds; SB 253 Scope 3 and all of SB 261 found likely unconstitutional [[264,265,266]]."],
+["10 Nov","us","First SB 253 reports due; revised ESRS in force","Scope 1/2 only, no assurance yet [[4,267]]."]
+].map(e=>({d:e[0],dom:e[1],t:e[2],x:e[3]}));
+
+const GATES=[
+["Registry methodology","Is the credit issued under a current method? Many are mid-transition. Verra’s new REDD+ method cuts volumes by about 40% on a preliminary sample [[164]].","Developer, registry, verifier"],
+["ICVCM quality label","Has the programme and the methodology earned the Core Carbon Principles label? About 120.7M credits had cleared it by November 2026 [[76]].","ICVCM"],
+["Ratings","Do one or more rating agencies rate it well? They often disagree; buyer platforms cost $50k–250k a year [[234]].","Rating agencies"],
+["Host-country authorisation","Has the host country issued a letter of authorisation? Counts range from 42 to 80, and Kenya’s refusal for one project removed about 13 Mt [[43]].","Host government"],
+["Corresponding adjustment","Has the host country reported the adjustment that stops double counting? Only Guyana, Zimbabwe and Malawi had by November 2025 [[171]].","Host government, UNFCCC"],
+["Claims code","Does the claim follow VCMI tiers and, for SBTi companies, the contribution tiers? [[211,233]]","VCMI, SBTi"],
+["Legal review","Does the wording survive the jurisdiction’s claims law? EU ECGT, Australia’s ACCC, Germany’s “klimaneutral” ruling, the Delta case [[8,74,231,274]].","Courts and regulators"]
+];
+
+const S2=[
+{k:"csrd",l:"I report under CSRD (ESRS)",f:[["loc","Location-based Scope 2","ESRS, ISSB and SBTi all use it"],["m2","Market-based Scope 2 (2015 rules, “Method 2”)","ESRS requires it, plus the share and types of instruments"]]},
+{k:"issb",l:"I report under an ISSB-based regime",f:[["loc","Location-based Scope 2","ESRS, ISSB and SBTi all use it"],["inst","Information on contractual instruments","IFRS S2 asks for it alongside location-based figures"]]},
+{k:"sbti",l:"I have an SBTi V2 target",f:[["loc","Location-based Scope 2","ESRS, ISSB and SBTi all use it"],["lce","Low-carbon-electricity percentage","SBTi’s separate target; hourly disclosure above 10 GWh a year per activity pool"]]},
+{k:"re100",l:"I’m an RE100 member",f:[["re","RE100-recognised renewable percentage","RE100 recognised 43% where members claimed 59% [[178]]"]]},
+{k:"m1",l:"I follow the GHG Protocol’s preferred Method 1 at some sites",f:[["m1","Market-based Scope 2, Method 1","Hourly, deliverable, incremental"]]},
+{k:"ami",l:"I’ll publish the proposed impact statement",f:[["ami","Consequential impact statement","Proposed under the GHG Protocol’s market-instruments work [[190]]"]]}
+];
+
+const ACTORS=[
+{n:"Software, consulting and data vendors",g:["complexity"],a:"Every divergence (GWP vintage, Scope 3 list, assurance standard) becomes a billable mapping. ESG consulting was forecast to grow from $11.5bn (2022) to over $48bn (2028) [[17]].",b:"Lose some growth against pre-Omnibus forecasts [[16]]."},
+{n:"Big Four and verification bodies",g:["complexity"],a:"Assurance is the largest cost block: in the Commission’s numbers, auditing (€2bn) exceeded reporting (€1.2bn) [[9]].",b:"Lose scope as EU reporters fall from about 50,000 to under 10,000 (inference) [[9,23]]."},
+{n:"Registries and standard bodies",g:["complexity"],a:"Per-unit fees and new unit types: Scope 3 units, nature credits, CRCF units [[18,55,259]].",b:"Largely neutral."},
+{n:"Rating agencies",g:["complexity"],a:"Doubt becomes a product: buyer subscriptions and developer-commissioned ratings [[234]].",b:"Largely neutral."},
+{n:"Host governments able to authorise",g:["complexity"],a:"Authorisation is scarce, so it carries a price: an estimated $4–5bn from CORSIA demand [[172,240]].",b:"—"},
+{n:"Annual-certificate buyers",g:["rollback"],a:"The Emissions First Partnership (Amazon, Meta and others) and the April 2026 coalition (including Apple and Amazon) kept annual, unbundled accounting alive [[20,189,261]].",b:"Method 2 survives with no end date; SBTi allows annual matching for its electricity target [[7,186]]."},
+{n:"Hourly-procurement leaders",g:["complexity"],a:"Google, Microsoft and LevelTen backed hourly certificates; a strict rule would have turned their head start into a moat [[188]].",b:"Lost on timing. Microsoft dropped unbundled certificates anyway [[255]]."},
+{n:"Fossil producers and financiers",g:["rollback"],a:"—",b:"CSDDD civil liability and transition-plan duties deleted; bank fossil financing up 8% to $906bn in 2025 [[19,142]]."},
+{n:"Republican attorneys general and coal",g:["rollback"],a:"—",b:"Vanguard’s “passivity” settlement [[42]]."},
+{n:"Incumbent management",g:["rollback"],a:"—",b:"Environmental and social shareholder proposals down about 50% since 2024; Rule 14a-8 rescission proposed [[151,152]]."},
+{n:"Buyers looking for an exit",g:["complexity"],a:"“Too complex or too risky” is a public reason to cut purchases: SBTi companies retired credits equal to 0.06% of their emissions [[233]].",b:"—"}
+];
+
+const LENSES=[
+{t:"Growing pains: convergence is coming",w:"ISSB, GHG Protocol–ISO, ICVCM, EFRAG",f:"Scope 3 data rejections at one provider fell from over 70% to about 33% [[241]]; about a third of G20 companies now reference the ISSB [[238]]; the CCP label covers about 120.7M credits [[76]].",a:"Convergence is mostly announced for 2027–28; Brazil reversed; Method 2 has no end date [[7,31]]."},
+{t:"Costs exceed benefits",w:"SEC under Atkins, the Draghi report, business lobbies",f:"Real CSRD costs ran roughly 3–7 times the original estimate [[15]]; the SEC claims about $4.9bn a year in savings from rescission [[3]].",a:"Investors spend about $1.37m a year collecting the data anyway [[235]]; the UK reporting mandate cut emissions 14–18% with no financial harm [[242]]."},
+{t:"“Simplification” is deregulation by capture",w:"Corporate Europe Observatory, SOMO, Finance Watch",f:"84% of Omnibus meetings were with business [[109]]; a US trade-deal clause matches the deletions item by item [[19]]; the GHG Protocol retreated after 12% company support [[181]].",a:"Preparers themselves expected only 20% cost relief, so the burden was real, not invented [[15]]."},
+{t:"Output mistaken for impact",w:"Pucker, Austin, Fancy",f:"97% of large firms disclose [[238]] while global emissions hit a record 57.7 Gt in 2024 [[246]].",a:"Disclosure does cut Scope 1 where a carbon price exists [[242]]."},
+{t:"Measures became targets",w:"Measurement researchers, data-centre analysts",f:"84% report business travel (under 1% of Scope 3) while under 20% report use of sold products (up to 66%) [[247]]; certificates overstated Scope 2 cuts about threefold [[179]].",a:"Location-based figures, hourly disclosure and quality screens are now required or recognised in parts of the system [[5]]."},
+{t:"Intermediaries collect rent",w:"Damodaran, Carbon Market Watch",f:"Fees track volume, not quality; nine in ten intermediaries disclose no margins [[169]].",a:"Ratings and the CCP label moved money toward quality: BBB+ credits rose from 31% to 62% of rated value [[170]]."},
+{t:"Unilateral protectionism",w:"G77+China, the African Group",f:"CBAM without transition support; one study estimates a $25bn hit to African GDP [[93]].",a:"CBAM keeps 99% of covered emissions with about 10% of importers [[27]]."},
+{t:"Voluntary pledges can’t constrain profitable activity",w:"Lupoff, Reclaim Finance",f:"Alliances collapsed into “frameworks”; fossil finance rose 8% [[130,142]].",a:"Race to Zero members report cutting emissions twice as fast as others (self-reported) [[139]]."}
+];
+
+const TESTS=[
+{q:"Too complex to follow?",m:4,a:"Yes for suppliers, mid-caps and project developers. Large multinationals cope by spending: 57% spend more than $1m a year on disclosure [[33]]. High disclosure rates show they report, not that the system is easy [[238]]. Complexity also migrated: from law to supplier contracts, from federal to state, from inventories to claims law."},
+{q:"Too unstable?",m:5,a:"Yes, measurably. Two enacted CSRD scope regimes plus a third proposed one in 18 months, two ESRS sets, the GHGRP deadline moved three times, California’s rule live four weeks before filing, and most voluntary standards resetting around 1 January 2027 [[4,13,29,34]]."},
+{q:"Too costly?",m:3,a:"Not in aggregate for big in-scope firms, though cost looks larger against profit than turnover (try the calculator). Yes at the margin: suppliers, small project developers and buyers clearing the integrity gates. The cost of volatility itself is unmeasured."},
+{q:"Too contradictory?",m:5,a:"Yes, structurally. The same tonne is excluded from SBTi targets, disclosed under GRI 102, usable for neutrality under ISO 14068-1 and unlimited under the Climate Pledge [[35,37,38]]. California and Brussels encourage the commitments Texas pleads as a conspiracy [[30]]."}
+];
+
+const WATCH=[
+["20 Nov 2026","SEC Rule 14a-8","Comments due on rescinding the shareholder-proposal rule [[152]]."],
+["Late Nov 2026","Ninth Circuit","Rehearing petitions; district court expected to enjoin SB 253 Scope 3 and SB 261 [[264,266]]."],
+["Dec 2026","IMO Net-Zero Framework","Adoption attempt at MEPC85 after the October 2025 adjournment [[202]]."],
+["10 Dec 2026","CARB fees","First fee notices for SB 253 and SB 261 [[96,97]]."],
+["30 Dec 2026","EUDR","Applies to large and medium operators; a third delay is called “possible” [[91]]."],
+["1 Jan 2027","Standards wave","UK CBAM starts; GRI 102/103; GHG Protocol land standard; IFRS S2 amendments [[89,35,113,14]]."],
+["1 Feb 2027","SBTi V2 and CBAM","SBTi V2 takes effect; CBAM certificate sales begin [[258,24]]."],
+["19 Feb 2027","ISSB nature","Comments close on the Practice Statement [[75]]."],
+["10 Mar 2027","GHGRP","Reporting-year 2025 deadline; lawsuits pending [[29]]."],
+["19 Mar 2027","CSRD","Member-state transposition deadline [[278]]."],
+["Q2 2027","GHG Protocol–ISO draft","Consolidated consultation covering Scope 1–3, Scope 2 methods and market instruments [[34,276]]."],
+["1 Jul 2027","EU assurance","Limited-assurance standard due [[2]]."],
+["30 Sep 2027","CBAM","First surrender (some sources say 31 May) [[24,87]]."],
+["2027","Accounting","IASB request for information; UNIDROIT final principles [[225,60]]."],
+["31 Jan 2028","Deadlines","Last SBTi V1 submissions; CORSIA Phase 1 cancellation deadline [[271,43]]."],
+["2028","ETS2","EU carbon price for buildings and road transport starts [[25]]."],
+["26 Jul 2028","CSDDD","Transposition deadline [[278]]."],
+["Q4 2028","GHG Protocol–ISO standard","Final Corporate Standard v3.0; Scope 2 Guidance v2.0 timing still TBD [[34]]."],
+["26 Jul 2029","CSDDD","Due diligence duties apply to firms with more than 5,000 employees [[1,2]]."]
+];
+
+const QUIZ=[
+{q:"Under SBTi’s V2 standard, what does an unbundled renewable certificate do?",o:["Lowers the Scope 2 emissions target","Counts toward a separate low-carbon-electricity target only","Nothing, it’s banned"],r:1,w:"Scope 2 emissions targets use the location-based method; certificates count toward a separate electricity target [[5]]."},
+{q:"Of the Commission’s €6.3bn a year in Omnibus savings, how much came from simpler standards?",o:["About €0.5bn","About €3bn","About €6bn"],r:0,w:"About €4.9bn came from removing companies from scope [[9]]."},
+{q:"What did the Ninth Circuit decide on 9 November 2026?",o:["Struck down all of SB 253 and SB 261","Upheld both laws in full","Let Scope 1/2 reporting proceed but found Scope 3 and SB 261 likely unconstitutional"],r:2,w:"The panel affirmed denial of an injunction for Scope 1/2 and reversed it for Scope 3 and SB 261 [[264,265]]."},
+{q:"What share of companies supported hourly matching in the GHG Protocol consultation?",o:["12%","45%","71%"],r:0,w:"12% supported it and 82% showed low or no support [[181]]."},
+{q:"Can a SAF certificate reduce reported Scope 3 under the GHG Protocol today?",o:["Yes, fully","Yes, up to 50%","No, it can only be reported separately"],r:2,w:"Market-based approaches for SAF are not allowed in the Corporate or Scope 3 Standard [[34]]."},
+{q:"Roughly how much have voluntary biodiversity credits sold since 2022?",o:["$6.8 million","$680 million","$6.8 billion"],r:0,w:"About $6.8m cumulative, or $8–10m with private deals [[57]]."},
+{q:"Under the new US accounting standard ASC 818, credits bought for voluntary retirement are…",o:["Recognised as assets at fair value","Expensed","Off balance sheet entirely"],r:1,w:"They are expensed rather than recognised as assets [[59,284]]."},
+{q:"How much of its 36.4 Mt of contracted durable carbon removal had Microsoft received by April 2026?",o:["About 91 kt","About 9 Mt","About 30 Mt"],r:0,w:"About 91 kt; contracted-to-delivered ratios run about 1–2% [[175]]."}
+];
+
+const GLOSS=[
+["Activity pool","A defined supply area (a sourcing region or grid) within which a company may claim attributes; SBTi V2’s deliverability boundary."],
+["AMI","Actions and Market Instruments: the GHG Protocol workstream on how purchased instruments and interventions are reported."],
+["ASC 818","FASB’s new US accounting topic for environmental credits, created by ASU 2026-02."],
+["Book-and-claim","A system where an environmental attribute is sold separately from the physical product it came from."],
+["CADO","Civil Aviation Decarbonization Organization, which runs the IATA SAF registry."],
+["CARB","California Air Resources Board, the regulator for SB 253 and SB 261."],
+["CBAM","Carbon Border Adjustment Mechanism: the EU’s carbon price on imports."],
+["CCP","Core Carbon Principles: the ICVCM’s quality label for carbon credits."],
+["CDM","Clean Development Mechanism, the Kyoto-era UN crediting system ending in 2026."],
+["CDR","Carbon dioxide removal."],
+["CORSIA","The UN aviation offsetting scheme run by ICAO."],
+["Corresponding adjustment","An accounting entry by a host country that stops a traded reduction being counted twice."],
+["CRCF","The EU Carbon Removals and Carbon Farming certification framework."],
+["CSDDD","EU Corporate Sustainability Due Diligence Directive."],
+["CSRD","EU Corporate Sustainability Reporting Directive."],
+["Deliverability","The rule that clean power must be deliverable to the grid where it is used."],
+["Double materiality","Reporting both how sustainability affects the company and how the company affects people and the planet."],
+["EAC","Energy attribute certificate, such as a REC, GO or I-REC."],
+["ECGT","EU Directive 2024/825 on empowering consumers for the green transition; bans offset-based neutrality claims."],
+["EFP","Emissions First Partnership: Amazon, Meta and others promoting consequential accounting."],
+["ESRS","European Sustainability Reporting Standards under CSRD."],
+["ETS2","The EU emissions trading system for buildings and road transport, delayed to 2028."],
+["EUDR","EU Deforestation Regulation."],
+["GCTA","Granular Certificate Trading Alliance: Google, Microsoft, LevelTen."],
+["GHGRP","The US EPA Greenhouse Gas Reporting Program."],
+["GO","Guarantee of Origin, the EU’s energy certificate."],
+["Hourly matching","Matching clean-power purchases to consumption hour by hour rather than over a year."],
+["ICVCM","Integrity Council for the Voluntary Carbon Market."],
+["Insetting","Funding emission reductions or removals inside one’s own value chain."],
+["ISB","The GHG Protocol’s Independent Standards Board."],
+["ISSB","International Sustainability Standards Board (IFRS S1 and S2)."],
+["ITMO","Internationally transferred mitigation outcome under Article 6.2."],
+["LCE","SBTi V2’s low-carbon-electricity target."],
+["LoA","Letter of authorisation from a host country for an Article 6 unit."],
+["LSRS","GHG Protocol Land Sector and Removals Standard."],
+["Mass balance","A chain-of-custody model where certified and conventional material mix but quantities are tracked."],
+["Method 1 / Method 2","The GHG Protocol’s proposed stricter (hourly, deliverable) and current (2015) market-based Scope 2 methods."],
+["NZAM","Net Zero Asset Managers initiative."],
+["NZBA","Net-Zero Banking Alliance, which ceased operations in October 2025."],
+["OER","Ongoing Emissions Responsibility: SBTi V2’s optional contribution tiers."],
+["PACM","The Paris Agreement Crediting Mechanism under Article 6.4."],
+["PPA","Power purchase agreement."],
+["RE100","Climate Group initiative for 100% renewable electricity."],
+["REC","Renewable energy certificate."],
+["REDD+","Reducing emissions from deforestation and forest degradation."],
+["SAF","Sustainable aviation fuel."],
+["SBTi","Science Based Targets initiative."],
+["S3U","Scope 3 unit, Verra’s value-chain unit."],
+["SFDR","EU Sustainable Finance Disclosure Regulation."],
+["TNFD","Taskforce on Nature-related Financial Disclosures."],
+["VCM","Voluntary carbon market."],
+["VCMI","Voluntary Carbon Markets Integrity Initiative."],
+["VSME","The EU voluntary sustainability standard for smaller companies."],
+["VVB","Validation and verification body."]
+];
+
+(function(){
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const REFMAP={}; REFS.forEach(r=>REFMAP[r.n]=r);
+function cite(str){return str.replace(/\[\[([\d,\s]+)\]\]/g,(m,g)=>g.split(',').map(x=>x.trim()).filter(Boolean).map(n=>`<span class="c"><button type="button" data-r="${n}" class="${REFMAP[n]&&REFMAP[n].v?'v':''}" aria-label="Source ${n}">${n}</button></span>`).join(''));}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+
+/* ---------- Explorer ---------- */
+const pills=$('#pills'), ledgers=$('#ledgers'), drawer=$('#drawer');
+let cur=INSTR[0];
+INSTR.forEach((it,i)=>{const b=document.createElement('button');b.className='pill';b.type='button';b.textContent=it.n;b.setAttribute('aria-pressed',i===0);b.onclick=()=>{cur=it;$$('.pill').forEach(p=>p.setAttribute('aria-pressed',p===b));renderExplorer();};pills.appendChild(b);});
+function renderExplorer(){
+  $('#instrDesc').innerHTML=cite(cur.d);
+  $('#serialText').textContent=cur.n;
+  drawer.hidden=true; ledgers.innerHTML='';
+  cur.c.forEach((cell,i)=>{
+    const [st,short,long]=cell, S=STATUS[st];
+    const b=document.createElement('button');b.type='button';b.className='ledger s-'+st;b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','drawer');
+    b.innerHTML=`<span class="who">${LEDGERS[i]}</span><span class="verdict"><i aria-hidden="true">${S.i}</i><span>${short}</span></span><span class="short">${S.l}</span>`;
+    b.onclick=()=>{const open=b.getAttribute('aria-expanded')==='true';$$('.ledger').forEach(x=>x.setAttribute('aria-expanded','false'));
+      if(open){drawer.hidden=true;return;}
+      b.setAttribute('aria-expanded','true');drawer.className='drawer s-'+st;drawer.hidden=false;
+      drawer.innerHTML=`<h4>${LEDGERS[i]}: ${short}</h4><p style="margin:.2rem 0 0">${cite(long)}</p>`;};
+    ledgers.appendChild(b);
+  });
+}
+$('#legend').innerHTML=Object.entries(STATUS).map(([k,v])=>`<span class="s-${k}"><i aria-hidden="true">${v.i}</i>${v.l}</span>`).join('');
+renderExplorer();
+
+/* ---------- Findings ---------- */
+$$('.finding>button').forEach(b=>b.onclick=()=>{const o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',!o);b.nextElementSibling.hidden=o;b.querySelector('.tog').textContent=o?'+':'−';});
+
+/* ---------- Timeline ---------- */
+const tl=$('#timeline'), tf=$('#tlFilters');
+const used=[...new Set(EVENTS.map(e=>e.dom))];
+let active='all';
+[['all','All']].concat(used.map(d=>[d,DOMAINS[d]])).forEach(([k,l])=>{const b=document.createElement('button');b.className='pill';b.type='button';b.textContent=l;b.setAttribute('aria-pressed',k==='all');b.onclick=()=>{active=k;$$('#tlFilters .pill').forEach(p=>p.setAttribute('aria-pressed',p===b));EVENTS.forEach((e,i)=>tl.children[i].hidden=!(k==='all'||e.dom===k));};tf.appendChild(b);});
+EVENTS.forEach((e,i)=>{const li=document.createElement('li');li.style.setProperty('--dc',DCOL[e.dom]);
+  li.innerHTML=`<span class="d">${e.d}</span><span class="dot" aria-hidden="true"></span><div><button type="button" aria-expanded="false" aria-controls="ev${i}"><span class="t">${e.t}</span><span class="dom">${DOMAINS[e.dom]}</span></button><div class="more" id="ev${i}" hidden><p>${cite(e.x)}</p></div></div>`;
+  const b=li.querySelector('button');b.onclick=()=>{const o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',!o);li.querySelector('.more').hidden=o;};
+  tl.appendChild(li);});
+
+/* ---------- Gates ---------- */
+let g=0; const track=$('#gateTrack');
+GATES.forEach((x,i)=>{const b=document.createElement('button');b.type='button';b.role='tab';b.textContent=i+1;b.setAttribute('aria-label','Gate '+(i+1)+': '+x[0]);b.onclick=()=>{g=i;renderGate();};track.appendChild(b);});
+function renderGate(){const x=GATES[g];
+  [...track.children].forEach((b,i)=>{b.classList.toggle('done',i<g);if(i===g)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.setAttribute('aria-selected',i===g);});
+  $('#gateCard').innerHTML=`<h4>Gate ${g+1} of 7: ${x[0]}</h4><p>${cite(x[1])}</p><p style="font-family:var(--display);font-size:.88rem;color:var(--ink2);margin-bottom:0">Who controls it: ${x[2]}</p>`;
+  $('#gPrev').disabled=g===0; $('#gNext').textContent=g===6?'Start again':'Next gate';}
+$('#gPrev').onclick=()=>{if(g>0){g--;renderGate();}};
+$('#gNext').onclick=()=>{g=g===6?0:g+1;renderGate();};
+renderGate();
+
+/* ---------- Scope 2 builder ---------- */
+const so=$('#s2opts');
+S2.forEach(o=>{const l=document.createElement('label');l.className='chk';l.innerHTML=`<input type="checkbox" value="${o.k}"><span>${o.l}</span>`;so.appendChild(l);});
+['csrd','sbti','re100'].forEach(k=>so.querySelector(`input[value=${k}]`).checked=true);
+function renderS2(){const seen={},list=[];
+  $$('#s2opts input').forEach(c=>{if(!c.checked)return;S2.find(o=>o.k===c.value).f.forEach(f=>{if(!seen[f[0]]){seen[f[0]]=1;list.push(f);}});});
+  $('#s2count').textContent=list.length;
+  $('#s2label').textContent=list.length===1?'Scope 2 figure to produce':'Scope 2 figures to produce';
+  $('#s2stack').innerHTML=list.length?list.map(f=>`<li><b>${f[1]}</b>${cite(f[2])}</li>`).join(''):'<li>Tick a box to see what you owe.</li>';}
+so.addEventListener('change',renderS2);renderS2();
+
+/* ---------- Calculator ---------- */
+const fmtE=v=>v>=1000?'€'+(v/1000).toFixed(v%1000?1:0)+'m':'€'+v+'k';
+function calc(){const c=+$('#cCost').value, t=+$('#cTurn').value, m=+$('#cMarg').value;
+  $('#oCost').textContent=fmtE(c); $('#oTurn').textContent=t>=1000?'€'+(t/1000).toFixed(1)+'bn':'€'+t+'m'; $('#oMarg').textContent=m+'%';
+  const pt=c/1000/t*100, pp=c/1000/(t*m/100)*100;
+  $('#rTurn').textContent=(pt<0.1?pt.toFixed(3):pt.toFixed(2))+'%'; $('#rProf').textContent=(pp<1?pp.toFixed(2):pp.toFixed(1))+'%';
+  $('#calcNote').textContent=pp>=5?'Measured against profit, this is a material cost: a margin-squeezed company would notice it, even though it looks trivial against turnover.':pp>=1?'Small against turnover, noticeable against profit.':'Small by either measure for this company.';}
+['#cCost','#cTurn','#cMarg'].forEach(s=>$(s).addEventListener('input',calc));calc();
+
+/* ---------- Charts ---------- */
+function bars(el,data,unit,fmt){
+  const W=640,H=56*data.length+30,L=210,R=70,max=Math.max(...data.map(d=>d[1]));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${el.dataset.title}">`;
+  data.forEach((d,i)=>{const y=14+i*56,w=(W-L-R)*d[1]/max;
+    s+=`<text x="0" y="${y+21}" font-family="Archivo,sans-serif" font-size="14" fill="#1E2622">${d[0]}</text>`;
+    s+=`<rect x="${L}" y="${y+4}" width="${Math.max(w,2)}" height="26" rx="4" fill="#1E2622" data-tip="${d[0]}: ${fmt(d[1])}"/>`;
+    s+=`<rect x="${L}" y="${y-4}" width="${W-L}" height="42" fill="transparent" data-tip="${d[0]}: ${fmt(d[1])}"/>`;
+    s+=`<text x="${L+w+8}" y="${y+22}" font-family="Archivo,sans-serif" font-size="14" font-weight="700" fill="#1E2622">${fmt(d[1])}</text>`;});
+  s+=`<line x1="${L}" x2="${L}" y1="6" y2="${H-14}" stroke="#B9C2BA"/></svg>`;
+  el.innerHTML=`<figcaption style="font-weight:700;color:var(--ink);margin-bottom:.4rem">${el.dataset.title}</figcaption>`+s+`<div class="tip" role="status"></div>`;
+  const tip=el.querySelector('.tip');
+  el.querySelectorAll('[data-tip]').forEach(r=>{r.addEventListener('mousemove',e=>{const b=el.getBoundingClientRect();tip.textContent=r.dataset.tip;tip.style.left=(e.clientX-b.left+12)+'px';tip.style.top=(e.clientY-b.top-30)+'px';tip.style.opacity=1;});r.addEventListener('mouseleave',()=>tip.style.opacity=0);});
+}
+bars($('#costChart'),[["2020 Commission assumption",128.8],["Survey median, internal",500],["Survey median, internal + external",800]],'k',v=>'€'+Math.round(v)+'k');
+$('#costChart').insertAdjacentHTML('beforeend',`<figcaption>Source: EFRAG cost-benefit analysis, December 2025 ${cite('[[15]]')}</figcaption>`);
+bars($('#vcmChart'),[["2021",2000],["2023",723],["2024",535]],'m',v=>v>=1000?'$'+(v/1000).toFixed(1)+'bn':'$'+v+'m');
+$('#vcmChart').insertAdjacentHTML('beforeend',`<figcaption>Source: Ecosystem Marketplace via Forest Trends; 2022 not shown ${cite('[[44,155]]')}</figcaption>`);
+
+/* ---------- Actors ---------- */
+function renderActors(f){$('#actors').innerHTML=ACTORS.map(a=>{const on=f==='all'||a.g.includes(f);
+  return `<div class="actor${on?'':' dim'}"><h4>${a.n}</h4><p><b>From complexity:</b> ${cite(a.a)}</p><p><b>From rollback:</b> ${cite(a.b)}</p></div>`;}).join('');}
+$$('.seg button').forEach(b=>b.onclick=()=>{$$('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderActors(b.dataset.g);});
+renderActors('all');
+
+/* ---------- Lenses ---------- */
+$('#lensList').innerHTML=LENSES.map(l=>`<details class="lens"><summary><div><h4>${l.t}</h4><small>Argued by ${l.w}</small></div></summary><div class="forag"><div class="for"><h5>Evidence for</h5>${cite(l.f)}</div><div class="ag"><h5>Evidence against</h5>${cite(l.a)}</div></div></details>`).join('');
+
+/* ---------- Tests ---------- */
+$('#tests').innerHTML=TESTS.map((t,i)=>`<div class="test"><h4>${t.q}</h4><div class="meter" aria-label="Severity ${t.m} of 5">${[1,2,3,4,5].map(n=>`<span class="${n<=t.m?'on':''}"></span>`).join('')}</div><button type="button" class="btn ghost" data-t="${i}" aria-expanded="false">Reveal the answer</button><div class="reveal" hidden>${cite(t.a)}</div></div>`).join('');
+$$('#tests .btn').forEach(b=>b.onclick=()=>{const r=b.nextElementSibling,o=!r.hidden;r.hidden=o;b.setAttribute('aria-expanded',!o);b.textContent=o?'Reveal the answer':'Hide the answer';});
+
+/* ---------- Watchlist ---------- */
+$('#watchList').innerHTML=WATCH.map(w=>`<li><span class="when">${w[0]}</span><div><b>${w[1]}</b><p>${cite(w[2])}</p></div></li>`).join('');
+
+/* ---------- Quiz ---------- */
+let answered=0,correct=0;
+$('#quizList').innerHTML=QUIZ.map((q,i)=>`<div class="q" data-q="${i}"><p class="qq">${i+1}. ${q.q}</p><div class="opts">${q.o.map((o,j)=>`<button type="button" data-o="${j}">${o}</button>`).join('')}</div><p class="why" hidden></p></div>`).join('');
+$$('.q').forEach(el=>{const q=QUIZ[+el.dataset.q];el.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{if(el.dataset.done)return;el.dataset.done=1;answered++;const j=+b.dataset.o;
+  el.querySelectorAll('.opts button')[q.r].classList.add('right');if(j!==q.r)b.classList.add('wrong');else correct++;
+  const w=el.querySelector('.why');w.hidden=false;w.innerHTML=(j===q.r?'<b>Right.</b> ':'<b>Not quite.</b> ')+cite(q.w);
+  $('#score').textContent=answered===QUIZ.length?`You scored ${correct} of ${QUIZ.length}.`:`${correct} right, ${answered} of ${QUIZ.length} answered`;});});
+
+/* ---------- Glossary ---------- */
+const gl=$('#glossList');
+gl.innerHTML=GLOSS.map(g=>`<dt data-k="${esc(g[0]).toLowerCase()}">${esc(g[0])}</dt><dd>${esc(g[1])}</dd>`).join('');
+$('#gSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();gl.querySelectorAll('dt').forEach(dt=>{const dd=dt.nextElementSibling;const hit=!q||dt.dataset.k.includes(q)||dd.textContent.toLowerCase().includes(q);dt.classList.toggle('hide',!hit);dd.classList.toggle('hide',!hit);});});
+
+/* ---------- References ---------- */
+$('#refList').innerHTML=REFS.map(r=>`<li id="ref-${r.n}" value="${r.n}">${esc(r.t)}. <a href="${r.u}" target="_blank" rel="noopener">${esc(r.u.replace(/^https?:\/\/(www\.)?/,'').slice(0,60))}${r.u.length>70?'…':''}</a>${r.g?` <span class="g">[${esc(r.g)}]</span>`:''}${r.v?' <span class="vv">verified 10 Nov 2026</span>':''}</li>`).join('');
+$('#rSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();$$('#refList li').forEach(li=>li.hidden=q&&!li.textContent.toLowerCase().includes(q));});
+
+/* ---------- Abbreviation tooltips (first use per chapter) ---------- */
+const AB={};GLOSS.forEach(g=>{if(/^[A-Z0-9\-]{2,}$/.test(g[0].split(' ')[0])&&!g[0].includes(' '))AB[g[0]]=g[1];});
+const keys=Object.keys(AB).sort((a,b)=>b.length-a.length);
+const re=new RegExp('\\b('+keys.map(k=>k.replace(/[-+]/g,'\\$&')).join('|')+')\\b');
+$$('section.ch').forEach(sec=>{const seen={};const w=document.createTreeWalker(sec,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||p.closest('button,h2,h3,h4,abbr,a,.c,dl,ol.refs,table,label,input,figure'))return NodeFilter.FILTER_REJECT;return re.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;}});
+  const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+  nodes.forEach(n=>{let m=n.nodeValue.match(re);while(m&&seen[m[1]]){const rest=n.nodeValue.slice(m.index+m[1].length);const m2=rest.match(re);if(!m2){m=null;break;}m={index:m.index+m[1].length+m2.index,1:m2[1]};}
+    if(!m)return;seen[m[1]]=1;const t=n.nodeValue,a=document.createElement('abbr');a.title=AB[m[1]];a.tabIndex=0;a.textContent=m[1];
+    const after=document.createTextNode(t.slice(m.index+m[1].length));n.nodeValue=t.slice(0,m.index);n.parentNode.insertBefore(a,n.nextSibling);a.parentNode.insertBefore(after,a.nextSibling);});});
+
+/* ---------- Citation popovers ---------- */
+let pop=null;
+function closePop(){if(pop){pop.remove();pop=null;}}
+document.addEventListener('click',e=>{const b=e.target.closest('.c button');if(!b){if(!e.target.closest('.pop'))closePop();return;}
+  e.preventDefault();e.stopPropagation();const r=REFMAP[b.dataset.r];if(!r)return;closePop();
+  pop=document.createElement('div');pop.className='pop';pop.setAttribute('role','dialog');pop.setAttribute('aria-label','Source '+r.n);
+  pop.innerHTML=`<b>[${r.n}]</b> ${esc(r.t)}<br><a href="${r.u}" target="_blank" rel="noopener">${esc(r.u)}</a>${r.g?`<br><span class="tag">${esc(r.g)}</span>`:''}${r.v?'<br><span class="ver">Verified live on 10 November 2026</span>':''}<br><a href="#ref-${r.n}">Show in the source list</a>`;
+  document.body.appendChild(pop);const rc=b.getBoundingClientRect();let x=rc.left+window.scrollX;const pw=pop.offsetWidth;x=Math.min(x,window.scrollX+document.documentElement.clientWidth-pw-12);pop.style.left=Math.max(8,x)+'px';pop.style.top=(rc.bottom+window.scrollY+6)+'px';
+  const first=pop.querySelector('a');first&&first.focus({preventScroll:true});});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop();});
+
+/* ---------- TOC highlight and progress ---------- */
+const links=$$('#toc a'), secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+function onScroll(){const y=window.scrollY+120;let k=0;secs.forEach((s,i)=>{if(s&&s.offsetTop<=y)k=i;});links.forEach((a,i)=>a.classList.toggle('on',i===k));
+  const h=document.documentElement.scrollHeight-window.innerHeight;$('#prog').style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>
